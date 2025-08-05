@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 interface SignUpProps {
   w: string;
   h: string;
@@ -5,6 +7,8 @@ interface SignUpProps {
 }
 
 const SignUp = ({ w, h, text }: SignUpProps) => {
+  const navigate = useNavigate();
+
   const getFontSize = () => {
     if (typeof window !== "undefined" && window.innerWidth <= 544) {
       return "0.8rem";
@@ -23,6 +27,8 @@ const SignUp = ({ w, h, text }: SignUpProps) => {
     <button
       className={`${getWidth()} ${h} rounded-[10px] bg-main text-center text-white cursor-pointer hover:bg-blue-700`}
       style={{ fontSize: getFontSize() }}
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onClick={() => navigate("/register")}
     >
       {text}
     </button>

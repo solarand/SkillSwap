@@ -1,13 +1,14 @@
-// import StartPage from "./pages/StartPage/StartPage";
-import StartPage from "@/pages/StartPage/StartPage";
-import LoginPage from "./pages/auth/loginPage";
-import RegisterPage from "./pages/auth/registerPage";
+import { Route, Routes } from "react-router-dom";
+import { appRoutes } from "./utils/routes";
 
 function App() {
   return (
     <>
-      {/*<StartPage />*/}
-      <RegisterPage />
+      <Routes>
+        {appRoutes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Routes>
     </>
   );
 }
