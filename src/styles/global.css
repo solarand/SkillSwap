@@ -1,0 +1,24 @@
+:root,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  overflow-x: hidden;
+}
+
+@import "tailwindcss";
+
+@theme {
+  --color-main: #513dff;
+  --color-cast-gray: #5b5a5b;
+  --inset-shadow-dark: inset 0px 200px 20px 0px rgba(0, 0, 0, 0.5);
+  --shadow-cust1: 0px 5px 10px 0px rgba(34, 60, 80, 0.2);
+  --text-header: clamp(1rem, 5vw, 3.75rem);
+  --text-paragraph: clamp(0.8rem, 2vw, 1.5rem);
+  --spacing-start-page-exemple-card: clamp(200px, 22vw, 400px);
+  --spacing-start-page-exemple-card-900: clamp(250px, 40vw, 500px);
+}
+
+@media (max-width: 544px) {
+}
