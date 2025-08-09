@@ -1,27 +1,14 @@
 import { useState } from "react";
 import TabsItemProfilePage from "./tabsItem";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { setActive } from "@/store/slices/profileSlice";
 
 const TabContainerProfilePage = () => {
-  const [activeTab, setActiveTab] = useState([
-    {
-      name: "Профиль",
-      isActive: true,
-    },
-    {
-      name: "Мои услуги",
-      isActive: false,
-    },
-    {
-      name: "История обменов",
-      isActive: false,
-    },
-  ]);
+  const activeTab = useAppSelector((state) => state.profileTabs);
+  const dispatch = useAppDispatch();
+
   function handleClick(tab: string) {
-    setActiveTab((prev) =>
-      prev.map((el) =>
-        el.name === tab ? { ...el, isActive: true } : { ...el, isActive: false }
-      )
-    );
+    dispatch(setActive(tab));
   }
 
   return (

@@ -1,14 +1,27 @@
 import HeaderProfilePage from "@/components/widgets/ProfilePage/header";
 import TabContainerProfilePage from "@/components/widgets/ProfilePage/ui/tabContainer";
+import { useAppSelector } from "@/hooks/redux";
 
 const ProfilePage = () => {
+  const tabs = useAppSelector(
+    (state) => state.profileTabs.filter((el) => el.isActive)[0].name
+  );
+
   return (
     <div className="h-screen bg-gray-50">
       <HeaderProfilePage />
       <div className="w-[1280px] m-auto">
         <h1 className="text-header font-bold">Личный кабинет</h1>
         <TabContainerProfilePage />
-        <div className="border bg-white w-[1280px] h-[700px] mt-5" />
+        {tabs === "Профиль" && (
+          <div className="border bg-white w-[1280px] h-[700px] mt-5" />
+        )}
+        {tabs === "Мои услуги" && (
+          <div className="border bg-amber-500 w-[1280px] h-[700px] mt-5" />
+        )}
+        {tabs === "История обменов" && (
+          <div className="border bg-blue-800 w-[1280px] h-[700px] mt-5" />
+        )}
       </div>
     </div>
   );
