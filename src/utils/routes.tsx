@@ -1,5 +1,6 @@
 import LoginPage from "@/pages/auth/loginPage";
 import RegisterPage from "@/pages/auth/registerPage";
+import ProfilePage from "@/pages/profile/profile";
 import StartPage from "@/pages/StartPage/StartPage";
 import type { ReactElement } from "react";
 
@@ -23,6 +24,11 @@ export const appRoutes: appRoute[] = [
   {
     path: "/register",
     element: <RegisterPage />,
+    name: "RegisterPage",
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
     name: "RegisterPage",
   },
 ];
