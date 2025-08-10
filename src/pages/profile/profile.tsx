@@ -16,6 +16,7 @@ const ProfilePage = () => {
         <TabContainerProfilePage />
         {tabs === "Профиль" && (
           // <div className="border bg-white w-[1280px] h-[700px] mt-5" />
+
           <ProfileTab />
         )}
         {tabs === "Мои услуги" && (
