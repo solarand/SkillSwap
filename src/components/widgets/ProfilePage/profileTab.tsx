@@ -4,7 +4,6 @@ import { ProfileInfoCard } from "./ui/profileInfoEditCard";
 
 const ProfileTab = () => {
   const user = useAppSelector((state) => state.user);
-  console.log(user);
 
   return (
     <div className="w-full flex justify-center max-[1280px]:w-screen">
