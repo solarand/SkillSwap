@@ -12,7 +12,7 @@ const TabContainerProfilePage = () => {
   }
 
   return (
-    <div className="w-full h-12 bg-gray-100 rounded-4xl grid grid-cols-3">
+    <div className="w-full h-12 bg-gray-100 rounded-4xl grid grid-cols-3 p-1 max-[1280px]:w-screen">
       {activeTab.map((el) => (
         <TabsItemProfilePage
           key={el.name}

@@ -7,7 +7,7 @@ interface TabsItemProps {
 const TabsItemProfilePage = ({ isActive, text, onClick }: TabsItemProps) => {
   return (
     <span
-      className={` text-cast-gray text-xl flex items-center justify-center cursor-pointer ${isActive && "rounded-4xl bg-white"}`}
+      className={` text-cast-gray text-xl flex items-center justify-center cursor-pointer ${isActive && "rounded-4xl bg-white"} max-[500px]:text-xs`}
       onClick={() => onClick(text)}
     >
       {text}

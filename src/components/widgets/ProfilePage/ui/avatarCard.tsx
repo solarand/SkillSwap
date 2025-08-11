@@ -16,7 +16,7 @@ export const AvatarCard = ({
   rating,
   completedProjects,
 }: AvatarCardProps) => (
-  <div className="h-fit border-2 bg-white border-gray-200 rounded-xl w-full md:w-1/3 flex flex-col items-center pt-8 pb-16 px-4">
+  <div className="h-fit border-2 bg-white border-gray-200 rounded-xl w-full min-[870px]:w-1/3 flex flex-col items-center pt-8 pb-16 px-4">
     <div className="relative w-40">
       <img
         src={avatar}
