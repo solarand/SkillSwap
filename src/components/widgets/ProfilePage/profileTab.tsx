@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/hooks/redux";
 import { AvatarCard } from "./ui/avatarCard";
-import { ProfileInfoCard } from "./ui/profileInfoCard";
+import { ProfileInfoCard } from "./ui/profileInfoEditCard";
 
 const ProfileTab = () => {
   const user = useAppSelector((state) => state.user);
