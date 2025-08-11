@@ -4,7 +4,7 @@ import type { RootState } from "../store";
 
 import testImg from "@/assets/png/start-page/eng.jpg";
 
-interface User {
+export interface IUser {
   name: string;
   surname: string;
   avatar: string;
@@ -23,7 +23,7 @@ interface ProfileInfoCard {
   skills: string[];
 }
 
-const initialState: User = {
+const localStorageNull: IUser = {
   name: "Иван",
   surname: "Иванов",
   avatar: testImg,
@@ -35,6 +35,11 @@ const initialState: User = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 };
 
+const initialStr = localStorage.getItem("UserData");
+const initialState: IUser = initialStr
+  ? (JSON.parse(initialStr) as IUser)
+  : localStorageNull;
+
 export const UserSlice = createSlice({
   name: "user",
   initialState,
@@ -42,11 +47,18 @@ export const UserSlice = createSlice({
     updateInfo(state, action: PayloadAction<ProfileInfoCard>) {
       if (action.payload) {
         Object.assign(state, action.payload);
+        localStorage.setItem("UserData", JSON.stringify(state));
       }
     },
     updateAvatar: (state, action: PayloadAction<string>) => {
       if (action.payload) {
         state.avatar = action.payload;
+        const userStr = localStorage.getItem("UserData");
+        const user: IUser = userStr ? (JSON.parse(userStr) as IUser) : state;
+
+        user.avatar = action.payload;
+
+        localStorage.setItem("UserData", JSON.stringify(user));
       }
     },
   },

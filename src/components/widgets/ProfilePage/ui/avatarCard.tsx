@@ -19,7 +19,6 @@ export const AvatarCard = ({
   surname,
   rating,
   completedProjects,
-  onAvatarUpdate,
 }: AvatarCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
