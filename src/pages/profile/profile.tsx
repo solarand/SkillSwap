@@ -2,6 +2,7 @@ import HeaderProfilePage from "@/components/widgets/ProfilePage/header";
 import TabContainerProfilePage from "@/components/widgets/ProfilePage/ui/tabContainer";
 import { useAppSelector } from "@/hooks/redux";
 import ProfileTab from "@/components/widgets/ProfilePage/profileTab";
+import { MyServices } from "@/components/widgets/ProfilePage/ui/mySrevices";
 
 const ProfilePage = () => {
   const tabs = useAppSelector(
@@ -22,7 +23,8 @@ const ProfilePage = () => {
           <ProfileTab />
         )}
         {tabs === "Мои услуги" && (
-          <div className="border bg-amber-500 w-[1280px] h-[700px] mt-5" />
+          //<div className="border bg-amber-500 w-[1280px] h-[700px] mt-5" />
+          <MyServices />
         )}
         {tabs === "История обменов" && (
           <div className="border bg-blue-800 w-[1280px] h-[700px] mt-5" />
