@@ -1,8 +1,9 @@
-import { Plus, Trash2, Eye, Check, Info, Edit } from "lucide-react";
+import { Plus } from "lucide-react";
 import ServiseCard from "./serviseCard";
+import { type ServiseCardProps } from "./serviseCard";
 
 export const MyServices = () => {
-  const services = [
+  const services: ServiseCardProps[] = [
     {
       title: "Разработка веб-приложений",
       description:

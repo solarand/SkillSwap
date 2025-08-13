@@ -1,11 +1,11 @@
 import { Check, Edit, Eye, Info, Trash2 } from "lucide-react";
 
-interface ServiseCardProps {
+export interface ServiseCardProps {
   title: string;
   description: string;
   category: string;
   exchangeOffers: number;
-  status: string;
+  status: "Поиск партнера" | "Ожидание подтверждения" | "Выполнение";
 }
 
 const ServiseCard = ({

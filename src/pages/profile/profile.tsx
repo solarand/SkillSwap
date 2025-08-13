@@ -3,6 +3,7 @@ import TabContainerProfilePage from "@/components/widgets/ProfilePage/ui/tabCont
 import { useAppSelector } from "@/hooks/redux";
 import ProfileTab from "@/components/widgets/ProfilePage/profileTab";
 import { MyServices } from "@/components/widgets/ProfilePage/ui/mySrevices";
+import { ExchangeHistory } from "@/components/widgets/ProfilePage/ui/exchangeHistory";
 
 const ProfilePage = () => {
   const tabs = useAppSelector(
@@ -27,7 +28,8 @@ const ProfilePage = () => {
           <MyServices />
         )}
         {tabs === "История обменов" && (
-          <div className="border bg-blue-800 w-[1280px] h-[700px] mt-5" />
+          //<div className="border bg-blue-800 w-[1280px] h-[700px] mt-5" />
+          <ExchangeHistory />
         )}
       </div>
     </div>
