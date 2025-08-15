@@ -4,8 +4,8 @@ export interface ServiseCardProps {
   title: string;
   description: string;
   category: string;
-  exchangeOffers: number;
-  status: "Поиск партнера" | "Ожидание подтверждения" | "Выполнение";
+  exchangeOffers?: number;
+  status?: "Поиск партнера" | "Ожидание подтверждения" | "Выполнение";
 }
 
 const ServiseCard = ({
