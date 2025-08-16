@@ -1,8 +1,10 @@
 import { Filter } from "lucide-react";
 import HistoryCard, { type HistoryCardProps } from "./historyCard";
+import { ExchangeStatusFilter } from "./historyFilter";
+import { useState } from "react";
 
 export const ExchangeHistory = () => {
-  const exchangeHistory: HistoryCardProps[] = [
+  const initialHistory: HistoryCardProps[] = [
     {
       title: "Разработка веб-приложения",
       description: "Обмен услуг с дизайнером на создание UI/UX прототипа.",
@@ -26,18 +28,44 @@ export const ExchangeHistory = () => {
     },
   ];
 
+  const [defaultFilter, setDefaultFilter] = useState<string>("all");
+  const [isOpenfilter, setIsOpenFilter] = useState(false);
+  const [exchangeHistory, setExchangeHistory] =
+    useState<HistoryCardProps[]>(initialHistory);
+
+  const onFilterChange = (value: string, label: string) => {
+    setExchangeHistory(initialHistory);
+    setIsOpenFilter(false);
+    setDefaultFilter(value);
+    if (value === "all") {
+      setExchangeHistory(initialHistory);
+    } else {
+      setExchangeHistory((prev) => prev.filter((el) => el.status === label));
+    }
+  };
+
   return (
-    <div className="border-2 bg-white border-gray-200 rounded-xl w-screen min-[1280px]:w-full max-[880px]:h-full mt-5 h-[700px] p-5 relative">
-      <button className="absolute top-5 right-5 flex items-center gap-1 px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
+    <div className="border-2 bg-white border-gray-200 rounded-xl w-screen min-[1280px]:w-full max-[880px]:h-full mt-5 h-auto p-5 relative">
+      <button
+        className="absolute top-5 right-5 flex items-center gap-1 px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
+        onClick={() => setIsOpenFilter((prev) => !prev)}
+      >
         <Filter className="h-4 w-4" />
         Фильтр
       </button>
+
+      {isOpenfilter && (
+        <ExchangeStatusFilter
+          onFilterChange={onFilterChange}
+          fil={defaultFilter}
+        />
+      )}
 
       <h1 className="text-2xl font-bold mt-2 max-[500px]:text-xl">
         История обменов
       </h1>
 
-      <div className="mt-5 flex flex-col gap-4">
+      <div className="mt-5 flex flex-col gap-4 h-auto">
         {exchangeHistory.map((el) => (
           <HistoryCard key={el.title} {...el} />
         ))}
