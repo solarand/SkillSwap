@@ -19,6 +19,3 @@ body {
   --spacing-start-page-exemple-card: clamp(200px, 22vw, 400px);
   --spacing-start-page-exemple-card-900: clamp(250px, 40vw, 500px);
 }
-
-@media (max-width: 544px) {
-}
