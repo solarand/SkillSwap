@@ -1,5 +1,6 @@
 import LoginPage from "@/pages/auth/loginPage";
 import RegisterPage from "@/pages/auth/registerPage";
+import ServicesCatalog from "@/pages/catalog/ServicesCatalog";
 import ProfilePage from "@/pages/profile/profile";
 import StartPage from "@/pages/StartPage/StartPage";
 import type { ReactElement } from "react";
@@ -29,6 +30,11 @@ export const appRoutes: appRoute[] = [
   {
     path: "/profile",
     element: <ProfilePage />,
-    name: "RegisterPage",
+    name: "ProfilePage",
+  },
+  {
+    path: "/services",
+    element: <ServicesCatalog />,
+    name: "ServicesPage",
   },
 ];
