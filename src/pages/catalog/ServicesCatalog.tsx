@@ -1,9 +1,12 @@
 import logo from "@/assets/svg/SkillSwap.svg";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 
 const ServiceCatalog = () => {
+  const [filterOpen, setFilterOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-gray-50 overflow-y-hidden">
+    <div className="min-h-screen bg-gray-50 md:overflow-y-hidden">
       {/* Компонент: Header - содержит логотип слева и профиль справа */}
       <header className="w-full bg-white shadow-sm p-4">
         <div className="flex justify-between items-center">
@@ -13,20 +16,38 @@ const ServiceCatalog = () => {
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gray-300 rounded-full" />{" "}
             {/* Плейсхолдер для аватара */}
-            <span className="text-sm font-medium text-gray-800">Имя</span>
+            <span className="text-sm font-medium text-gray-800 hidden max-[490px]:block">
+              Имя
+            </span>
             <ChevronDown className="stroke-2 w-4 h-4 text-gray-600" />
           </div>
         </div>
       </header>
 
       {/* Компонент: FilterSection - секция фильтров слева, с скроллбаром */}
-      <div className="flex flex-col md:flex-row h-[calc(100vh-80px)] border-t border-gray-200">
-        <aside className="w-full md:w-1/5 bg-white p-6 border-r border-gray-200 md:h-full overflow-y-auto">
+      <div className="flex flex-col md:flex-row md:h-[calc(100vh-80px)] border-t border-gray-200">
+        <aside
+          className={`w-full md:w-1/5 bg-white p-4 md:p-6 border-r border-gray-200 md:h-full md:overflow-y-auto ${filterOpen ? "" : "overflow-y-hidden h-12"}`}
+        >
           {/* Компонент: MainFilters - основные фильтры */}
           <div className="mb-6">
-            <h2 className="text-lg font-medium text-gray-800 mb-8">Фильтры</h2>
-
-            <h3 className="text-sm font-medium text-gray-700 mb-2">
+            <div className="flex justify-between">
+              <h2 className="text-lg font-medium text-gray-800 mb-8 mt-[-5px]">
+                Фильтры
+              </h2>
+              {filterOpen ? (
+                <ChevronUp
+                  className="stroke-2 w-4 h-4 text-gray-600 md:hidden"
+                  onClick={() => setFilterOpen(false)}
+                />
+              ) : (
+                <ChevronDown
+                  className="stroke-2 w-4 h-4 text-gray-600 md:hidden"
+                  onClick={() => setFilterOpen(true)}
+                />
+              )}
+            </div>
+            <h3 className="text-sm font-medium text-gray-700 mb-2 mt-[5px]">
               Категории услуг
             </h3>
             <div className="space-y-2 mb-4">
@@ -151,32 +172,6 @@ const ServiceCatalog = () => {
               Новые пользователи (без рейтинга)
             </label>
           </div>
-          <h3 className="text-sm font-medium text-gray-700 mb-2">
-            По времени выполнения
-          </h3>
-          <div className="space-y-2 mb-4">
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="radio"
-                className="h-4 w-4 text-blue-600 border-gray-200"
-              />
-              Сегодня
-            </label>
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="radio"
-                className="h-4 w-4 text-blue-600 border-gray-200"
-              />
-              В течение недели
-            </label>
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="radio"
-                className="h-4 w-4 text-blue-600 border-gray-200"
-              />
-              В течение месяца
-            </label>
-          </div>
 
           <h3 className="text-sm font-medium text-gray-700 mb-2">
             Срочность задачи
@@ -200,7 +195,7 @@ const ServiceCatalog = () => {
         </aside>
 
         {/* Компонент: MainContent - содержит сортировку и карточки */}
-        <main className="w-full md:w-4/5 p-6 relative">
+        <main className="w-full min-h-screen md:w-4/5 p-4 md:p-6 relative">
           {/* Компонент: FoundCount - количество найденных услуг */}
           <div className="mb-2 text-sm text-gray-600">Найдено: 3 варианта</div>
 
@@ -235,24 +230,19 @@ const ServiceCatalog = () => {
           </div>
 
           {/* Компонент: ServiceGrid - сетка карточек услуг */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 flex flex-col gap-3 relative">
-              <div className="flex gap-2 absolute right-2 top-2">
-                <span className=" px-2 py-1 bg-red-500 text-xs text-white rounded">
-                  Срочно
-                </span>
-                <span className=" px-2 py-1 bg-gray-200 text-xs text-gray-700 rounded">
-                  1 день
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-300 rounded-full" />{" "}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 relative">
+              <span className="absolute right-2 top-2 px-2 py-1 bg-red-500 text-xs text-white rounded">
+                Срочно
+              </span>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-300 rounded-full" />{" "}
                 {/* Плейсхолдер для аватара */}
                 <div>
                   <span className="text-sm font-medium text-gray-800">
                     Иван Иванов
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2">
                     <span className="text-sm text-yellow-500">★★★★☆</span>{" "}
                     {/* Рейтинг */}
                     <span className="text-sm text-gray-600">
@@ -271,21 +261,18 @@ const ServiceCatalog = () => {
               <p className="text-sm text-gray-600">
                 Адаптивный дизайн и разработка
               </p>
-              <button className="mt-auto px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 cursor-pointer">
+              <button className="mt-auto px-3 sm:px-4 py-1 sm:py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 cursor-pointer">
                 Предложить обмен
               </button>
             </div>
-            <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 flex flex-col gap-3 relative">
-              <span className="absolute top-2 right-2 px-2 py-1 bg-gray-200 text-xs text-gray-700 rounded">
-                1 неделя
-              </span>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-300 rounded-full" />
+            <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 relative">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-300 rounded-full" />
                 <div>
                   <span className="text-sm font-medium text-gray-800">
                     Мария Петрова
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2">
                     <span className="text-sm text-yellow-500">★★★☆☆</span>{" "}
                     {/* Рейтинг */}
                     <span className="text-sm text-gray-600">
@@ -304,21 +291,18 @@ const ServiceCatalog = () => {
               <p className="text-sm text-gray-600">
                 Уникальный брендовый логотип
               </p>
-              <button className="mt-auto px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 cursor-pointer">
+              <button className="mt-auto px-3 sm:px-4 py-1 sm:py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 cursor-pointer">
                 Предложить обмен
               </button>
             </div>
-            <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 flex flex-col gap-3 relative">
-              <span className="absolute top-2 right-2 px-2 py-1 bg-gray-200 text-xs text-gray-700 rounded">
-                2 дня
-              </span>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-300 rounded-full" />
+            <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 relative">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-300 rounded-full" />
                 <div>
                   <span className="text-sm font-medium text-gray-800">
                     Алексей Смирнов
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2">
                     <span className="text-sm text-yellow-500">★★★★★</span>{" "}
                     {/* Рейтинг */}
                     <span className="text-sm text-gray-600">
@@ -337,24 +321,24 @@ const ServiceCatalog = () => {
               <p className="text-sm text-gray-600">
                 Полное тестирование на ошибки
               </p>
-              <button className="mt-auto px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 cursor-pointer">
+              <button className="mt-auto px-3 sm:px-4 py-1 sm:py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 cursor-pointer">
                 Предложить обмен
               </button>
             </div>
           </div>
           {/* Компонент: Pagination - пагинация */}
-          <div className="mt-6 flex justify-center items-center gap-2 absolute bottom-3 left-0 right-0">
-            <button className="w-10 h-10 bg-gray-200 text-sm text-gray-700 rounded hover:bg-gray-300">
+          <div className="mt-4 sm:mt-6 hidden justify-center items-center gap-1 sm:gap-2 absolute bottom-2 sm:bottom-3 left-0 right-0 sm:flex">
+            <button className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-200 text-xs sm:text-sm text-gray-700 rounded hover:bg-gray-300">
               1
             </button>
-            <button className="w-10 h-10 bg-blue-600 text-white rounded">
+            <button className="w-8 sm:w-10 h-8 sm:h-10 bg-blue-600 text-white rounded">
               2
             </button>
-            <button className="w-10 h-10 bg-gray-200 text-sm text-gray-700 rounded hover:bg-gray-300">
+            <button className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-200 text-xs sm:text-sm text-gray-700 rounded hover:bg-gray-300">
               3
             </button>
-            <span className="text-sm text-gray-600">...</span>
-            <button className="w-10 h-10 bg-gray-200 text-sm text-gray-700 rounded hover:bg-gray-300">
+            <span className="text-xs sm:text-sm text-gray-600">...</span>
+            <button className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-200 text-xs sm:text-sm text-gray-700 rounded hover:bg-gray-300">
               10
             </button>
           </div>
