@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Plus, X } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import type { IService } from "./mySrevices";
 
@@ -22,13 +22,19 @@ export const AddServiceModal = ({
     formState: { errors },
     reset,
     control,
+    watch,
   } = useForm<IService>({
     defaultValues: {
       title: "",
       description: "",
       category: "",
+      isUrgent: false,
+      location: "Онлайн",
+      city: "",
     },
   });
+
+  const [isOffline, setIsOffline] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -36,9 +42,18 @@ export const AddServiceModal = ({
         title: "",
         description: "",
         category: "",
+        isUrgent: false,
+        location: "Онлайн",
+        city: "",
       });
+      setIsOffline(false);
     }
   }, [isOpen, reset]);
+
+  const location = watch("location");
+  useEffect(() => {
+    setIsOffline(location === "Оффлайн");
+  }, [location]);
 
   if (!isOpen) return null;
 
@@ -61,6 +76,19 @@ export const AddServiceModal = ({
     { value: "Консультации", label: "Консультации" },
     { value: "Программирование", label: "Программирование" },
     { value: "Аналитика", label: "Аналитика" },
+  ];
+
+  const cityOptions = [
+    { value: "Москва", label: "Москва" },
+    { value: "Санкт-Петербург", label: "Санкт-Петербург" },
+    { value: "Новосибирск", label: "Новосибирск" },
+    { value: "Екатеринбург", label: "Екатеринбург" },
+    { value: "Казань", label: "Казань" },
+    { value: "Нижний Новгород", label: "Нижний Новгород" },
+    { value: "Челябинск", label: "Челябинск" },
+    { value: "Самара", label: "Самара" },
+    { value: "Омск", label: "Омск" },
+    { value: "Ростов-на-Дону", label: "Ростов-на-Дону" },
   ];
 
   return (
@@ -145,7 +173,6 @@ export const AddServiceModal = ({
                       borderRadius: "0.5rem",
                       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                       zIndex: 1000,
-
                       "&::-webkit-scrollbar": {
                         width: "8px",
                       },
@@ -195,6 +222,141 @@ export const AddServiceModal = ({
                 {errors.category.message}
               </p>
             )}
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-600 max-[500px]:text-xs">
+              Тип услуги
+            </label>
+            <div className="space-y-2 mt-1">
+              <label className="flex items-center gap-2 text-sm text-gray-600">
+                <input
+                  {...register("location", { required: "Выберите тип услуги" })}
+                  type="radio"
+                  value="Онлайн"
+                  className="h-4 w-4 text-blue-600 border-gray-200 checked:bg-blue-600 focus:ring-blue-600 focus:ring-2"
+                  onClick={() => setIsOffline(false)}
+                />
+                Онлайн
+              </label>
+              <label className="flex items-center gap-2 text-sm text-gray-600">
+                <input
+                  {...register("location", { required: "Выберите тип услуги" })}
+                  type="radio"
+                  value="Оффлайн"
+                  className="h-4 w-4 text-blue-600 border-gray-200 checked:bg-blue-600 focus:ring-blue-600 focus:ring-2"
+                  onChange={() => setIsOffline(true)}
+                />
+                Оффлайн
+              </label>
+            </div>
+            {errors.location && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.location.message}
+              </p>
+            )}
+          </div>
+
+          {isOffline && (
+            <div className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-600 max-[500px]:text-xs">
+                Город
+              </label>
+              <Controller
+                name="city"
+                control={control}
+                rules={{ required: isOffline ? "Выберите город" : false }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={cityOptions}
+                    className="mt-1 text-sm"
+                    classNamePrefix="select"
+                    isClearable
+                    isSearchable
+                    styles={{
+                      control: (provided) => ({
+                        ...provided,
+                        minHeight: "2.5rem",
+                        borderRadius: "0.5rem",
+                        border: "1px solid #e5e7eb",
+                        paddingLeft: "0.75rem",
+                        "&:hover": {
+                          borderColor: "#3b82f6",
+                        },
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        maxHeight: "200px",
+                        overflowY: "auto",
+                        borderRadius: "0.5rem",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                        zIndex: 1000,
+                        "&::-webkit-scrollbar": {
+                          width: "8px",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                          background: "#f1f1f1",
+                          borderRadius: "4px",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                          background: "#888",
+                          borderRadius: "4px",
+                        },
+                        "&::-webkit-scrollbar-thumb:hover": {
+                          background: "#555",
+                        },
+                        scrollbarWidth: "thin",
+                        scrollbarColor: "#888 #f1f1f1",
+                      }),
+                      option: (provided, state) => ({
+                        ...provided,
+                        fontSize: "0.875rem",
+                        backgroundColor: state.isSelected ? "#3b82f6" : "white",
+                        color: state.isSelected ? "white" : "black",
+                        "&:hover": {
+                          backgroundColor: "#dbeafe",
+                        },
+                      }),
+                      menuList: (provided) => ({
+                        ...provided,
+                        maxHeight: "200px",
+                        overflowY: "auto",
+                      }),
+                    }}
+                    onChange={(option) =>
+                      field.onChange(option ? option.value : "")
+                    }
+                    value={
+                      cityOptions.find(
+                        (option) => option.value === field.value
+                      ) || null
+                    }
+                    placeholder="Выберите город"
+                  />
+                )}
+              />
+              {errors.city && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.city.message}
+                </p>
+              )}
+            </div>
+          )}
+
+          <div className="space-y-2 mb-4">
+            <label className="text-sm font-semibold text-gray-600 max-[500px]:text-xs">
+              Срочно?
+            </label>
+            <label className="flex items-center gap-2 text-sm text-gray-600">
+              <input
+                {...register("isUrgent")}
+                type="checkbox"
+                value="true"
+                className="h-4 w-4 text-blue-600 border-gray-200 checked:bg-blue-600 focus:ring-blue-600 focus:ring-2"
+              />
+              Да
+            </label>
           </div>
 
           <div className="flex gap-4 justify-end mt-6">

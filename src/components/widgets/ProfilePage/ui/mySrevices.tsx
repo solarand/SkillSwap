@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
-import ServiseCard from "./serviseCard";
-import { type ServiseCardProps } from "./serviseCard";
+import ServiseCard from "./historyServiseCard";
+import { type ServiseCardProps } from "./historyServiseCard";
 import { AddServiceModal } from "./addServiceModal";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
@@ -9,6 +9,9 @@ export interface IService {
   title: string;
   description: string;
   category: string;
+  isUrgent?: boolean;
+  location?: "Оффлайн" | "Онлайн";
+  city?: string;
 }
 
 export const MyServices = () => {
@@ -22,6 +25,8 @@ export const MyServices = () => {
       category: "Веб-разработка",
       status: "Поиск партнера",
       exchangeOffers: 0,
+      isUrgent: true,
+      location: "Онлайн",
     },
     {
       title: "UI/UX дизайн",
@@ -30,6 +35,9 @@ export const MyServices = () => {
       category: "Дизайн",
       status: "Ожидание подтверждения",
       exchangeOffers: 3,
+      isUrgent: false,
+      location: "Оффлайн",
+      city: "Москва",
     },
     {
       title: "Оптимизация производительности",
@@ -38,6 +46,8 @@ export const MyServices = () => {
       category: "Веб-разработка",
       status: "Выполнение",
       exchangeOffers: 0,
+      isUrgent: true,
+      location: "Онлайн",
     },
   ]);
 
@@ -46,6 +56,7 @@ export const MyServices = () => {
     data.status = "Поиск партнера";
     data.exchangeOffers = 0;
     setServices((prev) => [data, ...prev]);
+    console.log(services);
   };
 
   return (

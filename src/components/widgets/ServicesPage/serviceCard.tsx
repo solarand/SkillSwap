@@ -1,3 +1,4 @@
+import LabelSrocho from "@/components/ui/span/srochno";
 import type { IService } from "./mainContent";
 
 const ServiceCard = ({
@@ -12,11 +13,7 @@ const ServiceCard = ({
 }: IService) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 relative">
-      {srochno && (
-        <span className="absolute right-2 top-2 px-2 py-1 bg-red-500 text-xs text-white rounded">
-          Срочно
-        </span>
-      )}
+      {srochno && <LabelSrocho />}
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-300 rounded-full" />{" "}
         <div>

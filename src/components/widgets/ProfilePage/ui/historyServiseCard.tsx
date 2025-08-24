@@ -1,3 +1,4 @@
+import LabelSrocho from "@/components/ui/span/srochno";
 import { Check, Edit, Eye, Info, Trash2 } from "lucide-react";
 
 export interface ServiseCardProps {
@@ -6,6 +7,9 @@ export interface ServiseCardProps {
   category: string;
   exchangeOffers?: number;
   status?: "Поиск партнера" | "Ожидание подтверждения" | "Выполнение";
+  isUrgent?: boolean;
+  location?: string;
+  city?: string;
 }
 
 const ServiseCard = ({
@@ -14,15 +18,24 @@ const ServiseCard = ({
   category,
   exchangeOffers = 0,
   status,
+  location,
+  isUrgent = false,
+  city = "",
 }: ServiseCardProps) => {
   return (
     <>
       {status === "Поиск партнера" && (
-        <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4">
+        <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4 relative">
           <div className="flex-1">
+            {isUrgent && <LabelSrocho />}
             <h2 className="text-lg font-semibold">{title}</h2>
             <p className="text-gray-600 mt-1">{description}</p>
             <p className="text-sm text-gray-500 mt-1">Категория: {category}</p>
+            <span
+              className={`text-sm ${location === "Онлайн" ? "text-green-600" : "text-red-600"}`}
+            >
+              {location === "Онлайн" ? "Онлайн" : `Оффлайн(${city})`}
+            </span>{" "}
             <p className="text-sm mt-2">
               <span className="inline-block px-2 py-1 bg-blue-100 text-blue-800 rounded-md">
                 Поиск партнера
@@ -40,11 +53,17 @@ const ServiseCard = ({
         </div>
       )}
       {status === "Ожидание подтверждения" && (
-        <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4">
+        <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4 relative">
           <div className="flex-1">
+            {isUrgent && <LabelSrocho />}
             <h2 className="text-lg font-semibold">{title}</h2>
             <p className="text-gray-600 mt-1">{description}</p>
             <p className="text-sm text-gray-500 mt-1">Категория: {category}</p>
+            <span
+              className={`text-sm ${location === "Онлайн" ? "text-green-600" : "text-red-600"}`}
+            >
+              {location === "Онлайн" ? "Онлайн" : `Оффлайн(${city})`}
+            </span>{" "}
             <p className="text-sm mt-2">
               <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 rounded-md">
                 Ожидание подтверждения
@@ -70,11 +89,17 @@ const ServiseCard = ({
       )}
 
       {status === "Выполнение" && (
-        <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4">
+        <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4 relative">
           <div className="flex-1">
+            {isUrgent && <LabelSrocho />}
             <h2 className="text-lg font-semibold">{title} </h2>
             <p className="text-gray-600 mt-1">{description} </p>
             <p className="text-sm text-gray-500 mt-1">Категория: {category}</p>
+            <span
+              className={`text-sm ${location === "Онлайн" ? "text-green-600" : "text-red-600"}`}
+            >
+              {location === "Онлайн" ? "Онлайн" : `Оффлайн(${city})`}
+            </span>{" "}
             <p className="text-sm mt-2">
               <span className="inline-block px-2 py-1 bg-green-100 text-green-800 rounded-md">
                 Выполнение
