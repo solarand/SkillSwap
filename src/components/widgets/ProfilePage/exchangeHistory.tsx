@@ -2,32 +2,9 @@ import { Filter } from "lucide-react";
 import HistoryCard, { type HistoryCardProps } from "./historyCard";
 import { ExchangeStatusFilter } from "./historyFilter";
 import { useState } from "react";
+import { initialHistory } from "@/utils/constants/profileConst";
 
 export const ExchangeHistory = () => {
-  const initialHistory: HistoryCardProps[] = [
-    {
-      title: "Разработка веб-приложения",
-      description: "Обмен услуг с дизайнером на создание UI/UX прототипа.",
-      category: "Веб-разработка",
-      status: "Завершен",
-      date: "10 августа 2025",
-    },
-    {
-      title: "UI/UX дизайн",
-      description: "Обмен на разработку landing page для портфолио.",
-      category: "Дизайн",
-      status: "В процессе",
-      date: "12 августа 2025",
-    },
-    {
-      title: "Оптимизация производительности",
-      description: "Обмен на тестирование API, отменен по инициативе партнера.",
-      category: "Веб-разработка",
-      status: "Отменен",
-      date: "8 августа 2025",
-    },
-  ];
-
   const [defaultFilter, setDefaultFilter] = useState<string>("all");
   const [isOpenfilter, setIsOpenFilter] = useState(false);
   const [exchangeHistory, setExchangeHistory] =

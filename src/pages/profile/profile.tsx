@@ -1,9 +1,9 @@
 import HeaderProfilePage from "@/components/widgets/ProfilePage/header";
-import TabContainerProfilePage from "@/components/widgets/ProfilePage/ui/tabContainer";
+import TabContainerProfilePage from "@/components/widgets/ProfilePage/tabContainer";
 import { useAppSelector } from "@/hooks/redux";
 import ProfileTab from "@/components/widgets/ProfilePage/profileTab";
-import { MyServices } from "@/components/widgets/ProfilePage/ui/mySrevices";
-import { ExchangeHistory } from "@/components/widgets/ProfilePage/ui/exchangeHistory";
+import { MyServices } from "@/components/widgets/ProfilePage/mySrevices";
+import { ExchangeHistory } from "@/components/widgets/ProfilePage/exchangeHistory";
 
 const ProfilePage = () => {
   const tabs = useAppSelector(

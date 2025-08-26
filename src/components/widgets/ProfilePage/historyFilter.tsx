@@ -1,3 +1,4 @@
+import { statuses } from "@/utils/constants/profileConst";
 import { useState } from "react";
 
 interface ExchangeStatusFilterProps {
@@ -15,13 +16,6 @@ export const ExchangeStatusFilter = ({
     setSelectedStatus(value);
     onFilterChange(value, label);
   };
-
-  const statuses = [
-    { value: "all", label: "Все", id: "status-all" },
-    { value: "completed", label: "Завершен", id: "status-completed" },
-    { value: "in-progress", label: "В процессе", id: "status-in-progress" },
-    { value: "cancelled", label: "Отменен", id: "status-cancelled" },
-  ];
 
   return (
     <div className="relative w-full max-[500px]:w-full">

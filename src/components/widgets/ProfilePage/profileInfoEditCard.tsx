@@ -4,18 +4,11 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { Edit, Settings } from "lucide-react";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateInfo } from "@/store/slices/userSlice";
-import SkillBadge from "./skillsBadge";
 import SkillsInput from "./skillsInput";
+import type { ProfileFormData } from "@/utils/types/profileType";
+import SkillBadge from "@/components/ui/span/skillBadge";
 
 interface ProfileInfoCardProps {
-  name: string;
-  surname: string;
-  email: string;
-  description: string;
-  skills: string[];
-}
-
-interface ProfileFormData {
   name: string;
   surname: string;
   email: string;

@@ -1,5 +1,5 @@
-import { useRef, useState, useCallback, useEffect } from "react";
-import { X, Upload, Image as ImageIcon } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { X, Upload } from "lucide-react";
 
 interface ImageUploadModalProps {
   isOpen: boolean;

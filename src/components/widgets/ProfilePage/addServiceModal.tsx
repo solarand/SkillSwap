@@ -3,7 +3,9 @@ import { Plus, X } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import type { IService } from "./mySrevices";
+import { categoryOptions, cityOptions } from "@/utils/constants/profileConst";
+import ErrorMessage from "@/components/ui/errorMsh";
+import type { IService } from "@/utils/types/profileType";
 
 interface AddServiceModalProps {
   isOpen: boolean;
@@ -62,35 +64,6 @@ export const AddServiceModal = ({
     onClose();
   };
 
-  const categoryOptions = [
-    { value: "", label: "Выберите категорию" },
-    { value: "Веб-разработка", label: "Веб-разработка" },
-    { value: "Дизайн", label: "Дизайн" },
-    { value: "Тестирование", label: "Тестирование" },
-    { value: "Юридические услуги", label: "Юридические услуги" },
-    { value: "Иностранные языки", label: "Иностранные языки" },
-    { value: "Сантехника", label: "Сантехника" },
-    { value: "Маркетинг", label: "Маркетинг" },
-    { value: "Финансы", label: "Финансы" },
-    { value: "Образование", label: "Образование" },
-    { value: "Консультации", label: "Консультации" },
-    { value: "Программирование", label: "Программирование" },
-    { value: "Аналитика", label: "Аналитика" },
-  ];
-
-  const cityOptions = [
-    { value: "Москва", label: "Москва" },
-    { value: "Санкт-Петербург", label: "Санкт-Петербург" },
-    { value: "Новосибирск", label: "Новосибирск" },
-    { value: "Екатеринбург", label: "Екатеринбург" },
-    { value: "Казань", label: "Казань" },
-    { value: "Нижний Новгород", label: "Нижний Новгород" },
-    { value: "Челябинск", label: "Челябинск" },
-    { value: "Самара", label: "Самара" },
-    { value: "Омск", label: "Омск" },
-    { value: "Ростов-на-Дону", label: "Ростов-на-Дону" },
-  ];
-
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white w-[600px] max-[500px]:w-11/12 p-6 rounded-xl relative max-h-[90vh]">
@@ -116,11 +89,7 @@ export const AddServiceModal = ({
               placeholder="Введите название услуги"
               className="mt-1 h-10 rounded-lg border border-gray-200 pl-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.title && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.title.message}
-              </p>
-            )}
+            {errors.title && <ErrorMessage message={errors.title.message} />}
           </div>
 
           <div className="flex flex-col">
@@ -135,9 +104,7 @@ export const AddServiceModal = ({
               className="mt-1 h-24 rounded-lg border border-gray-200 pl-3 pt-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.description && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.description.message}
-              </p>
+              <ErrorMessage message={errors.description.message} />
             )}
           </div>
 
@@ -218,9 +185,7 @@ export const AddServiceModal = ({
               )}
             />
             {errors.category && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.category.message}
-              </p>
+              <ErrorMessage message={errors.category.message} />
             )}
           </div>
 
@@ -251,9 +216,7 @@ export const AddServiceModal = ({
               </label>
             </div>
             {errors.location && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.location.message}
-              </p>
+              <ErrorMessage message={errors.location.message} />
             )}
           </div>
 
@@ -336,11 +299,7 @@ export const AddServiceModal = ({
                   />
                 )}
               />
-              {errors.city && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.city.message}
-                </p>
-              )}
+              {errors.city && <ErrorMessage message={errors.city.message} />}
             </div>
           )}
 

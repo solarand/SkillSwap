@@ -1,5 +1,4 @@
-import { useState } from "react";
-import TabsItemProfilePage from "./tabsItem";
+import TabsItemProfilePage from "@/components/ui/span/tabsItem";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setActive } from "@/store/slices/profileSlice";
 

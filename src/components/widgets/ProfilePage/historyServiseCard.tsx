@@ -1,16 +1,6 @@
 import LabelSrocho from "@/components/ui/span/srochno";
 import { Check, Edit, Eye, Info, Trash2 } from "lucide-react";
-
-export interface ServiseCardProps {
-  title: string;
-  description: string;
-  category: string;
-  exchangeOffers?: number;
-  status?: "Поиск партнера" | "Ожидание подтверждения" | "Выполнение";
-  isUrgent?: boolean;
-  location?: string;
-  city?: string;
-}
+import type { ServiceCard } from "@/utils/types/profileType";
 
 const ServiseCard = ({
   title,
@@ -21,7 +11,7 @@ const ServiseCard = ({
   location,
   isUrgent = false,
   city = "",
-}: ServiseCardProps) => {
+}: ServiceCard) => {
   return (
     <>
       {status === "Поиск партнера" && (

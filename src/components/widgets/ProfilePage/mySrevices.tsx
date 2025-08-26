@@ -1,23 +1,14 @@
 import { Plus } from "lucide-react";
 import ServiseCard from "./historyServiseCard";
-import { type ServiseCardProps } from "./historyServiseCard";
 import { AddServiceModal } from "./addServiceModal";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
-
-export interface IService {
-  title: string;
-  description: string;
-  category: string;
-  isUrgent?: boolean;
-  location?: "Оффлайн" | "Онлайн";
-  city?: string;
-}
+import type { ServiceCard } from "@/utils/types/profileType";
 
 export const MyServices = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [services, setServices] = useState<ServiseCardProps[]>([
+  const [services, setServices] = useState<ServiceCard[]>([
     {
       title: "Разработка веб-приложений",
       description:
@@ -51,7 +42,7 @@ export const MyServices = () => {
     },
   ]);
 
-  const handleAddService: SubmitHandler<ServiseCardProps> = (data) => {
+  const handleAddService: SubmitHandler<ServiceCard> = (data) => {
     setIsOpen(false);
     data.status = "Поиск партнера";
     data.exchangeOffers = 0;

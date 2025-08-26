@@ -1,12 +1,5 @@
 import { Info } from "lucide-react";
-
-export interface HistoryCardProps {
-  title: string;
-  description: string;
-  category: string;
-  date: string;
-  status: "Завершен" | "В процессе" | "Отменен";
-}
+import type { HistoryCard } from "@/utils/types/profileType";
 
 const HistoryCard = ({
   title,
@@ -14,7 +7,7 @@ const HistoryCard = ({
   category,
   date,
   status,
-}: HistoryCardProps) => {
+}: HistoryCard) => {
   function getStyle() {
     if (status === "Завершен") {
       return "bg-green-100 text-green-800";
