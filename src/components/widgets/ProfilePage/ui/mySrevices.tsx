@@ -56,7 +56,6 @@ export const MyServices = () => {
     data.status = "Поиск партнера";
     data.exchangeOffers = 0;
     setServices((prev) => [data, ...prev]);
-    console.log(services);
   };
 
   return (

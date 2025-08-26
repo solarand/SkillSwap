@@ -2,36 +2,13 @@ import { useForm, FormProvider } from "react-hook-form";
 import ServiceInput from "@/components/ui/input/serviceInput";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { categories, rating } from "@/utils/constants/servicesConst";
+import type { FilterFormValues } from "@/utils/types/serviceType";
 
-interface FormValues {
-  category: string[];
-  location: string;
-  rating: string[];
-  sroch: string;
-  city: string;
-}
 const FilterSection = () => {
-  const categories = [
-    "IT",
-    "Дизайн",
-    "Маркетинг",
-    "Копирайтинг",
-    "Обучение",
-    "Фото-видео",
-    "Ремонт",
-    "Красота",
-    "Здоровье",
-    "Другое",
-  ];
-  const rating = [
-    "★★★★☆ и выше",
-    "Только с отзывами",
-    "Новые пользователи (без рейтинга)",
-  ];
-
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<FilterFormValues>({
     defaultValues: {
       category: [],
       location: "",
@@ -51,7 +28,7 @@ const FilterSection = () => {
       isInitialMount.current = false;
       return;
     }
-    console.log("Обновленные данные:", formValues);
+    //console.log("Обновленные данные:", formValues);
   }, [formValues]);
   return (
     <FormProvider {...methods}>

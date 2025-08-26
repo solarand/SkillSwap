@@ -1,5 +1,5 @@
 import LabelSrocho from "@/components/ui/span/srochno";
-import type { IService } from "./mainContent";
+import type { IService } from "@/utils/types/serviceType";
 
 const ServiceCard = ({
   name,
