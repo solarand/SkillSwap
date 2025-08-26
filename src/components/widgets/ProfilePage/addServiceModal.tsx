@@ -3,9 +3,11 @@ import { Plus, X } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { categoryOptions, cityOptions } from "@/utils/constants/profileConst";
+import { cityOptions } from "@/utils/constants/profileConst";
 import ErrorMessage from "@/components/ui/errorMsh";
 import type { IService } from "@/utils/types/profileType";
+import { categoryMerge } from "@/utils/categoryMerge";
+import { categories } from "@/utils/constants/servicesConst";
 
 interface AddServiceModalProps {
   isOpen: boolean;
@@ -36,6 +38,7 @@ export const AddServiceModal = ({
     },
   });
 
+  const categoryOptions = categoryMerge(categories);
   const [isOffline, setIsOffline] = useState(false);
 
   useEffect(() => {
