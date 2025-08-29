@@ -30,3 +30,8 @@ export interface IFormField {
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   readOnly?: boolean;
 }
+
+export interface ILoginFormValues {
+  email: string;
+  password: string;
+}
