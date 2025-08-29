@@ -1,85 +1,21 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Link } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { InputField } from "@/components/ui/input/InputField";
-
-export interface RegisterFormValues {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface IFormField {
-  name: "name" | "surname" | "email" | "password" | "confirmPassword";
-  type: string;
-  placeholder: string;
-  required: boolean;
-  autoComplete: string;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  readOnly?: boolean;
-}
+import type { RegisterFormValues } from "@/utils/types/authType";
+import { authFormFields } from "@/utils/constants/authConst";
 
 const RegisterPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<RegisterFormValues>();
 
   const onSubmit: SubmitHandler<RegisterFormValues> = (data) => {
     console.log(data);
   };
-
-  const formFields: IFormField[] = [
-    {
-      name: "name",
-      type: "text",
-      placeholder: "Имя",
-      required: true,
-      autoComplete: "off",
-    },
-    {
-      name: "surname",
-      type: "text",
-      placeholder: "Фамилия",
-      required: true,
-      autoComplete: "off",
-    },
-    {
-      name: "email",
-      type: "email",
-      placeholder: "Email",
-      required: true,
-      autoComplete: "off",
-      onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
-        e.target.removeAttribute("readonly");
-        if (e.target.value === "") {
-          e.target.setAttribute("autocomplete", "new-email");
-        }
-      },
-      readOnly: true,
-    },
-    {
-      name: "password",
-      type: "password",
-      placeholder: "Пароль",
-      required: true,
-      autoComplete: "new-password",
-    },
-    {
-      name: "confirmPassword",
-      type: "password",
-      placeholder: "Подтвердите пароль",
-      required: true,
-      autoComplete: "new-password",
-    },
-  ];
 
   return (
     <div className="relative w-full h-screen">
@@ -94,12 +30,13 @@ const RegisterPage = () => {
             Создать аккаунт
           </h2>
 
-          {formFields.map((el) => (
+          {authFormFields.map((el) => (
             <InputField
-              key={el.name}
+              key={el.nameField}
               {...el}
               register={register}
-              error={errors.name}
+              error={errors[el.nameField]?.message}
+              watch={watch}
             />
           ))}
 
