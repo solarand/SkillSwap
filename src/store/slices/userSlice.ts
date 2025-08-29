@@ -5,6 +5,7 @@ import type { RootState } from "../store";
 import testImg from "@/assets/png/start-page/eng.jpg";
 
 export interface IUser {
+  id: number;
   name: string;
   surname: string;
   avatar: string;
@@ -24,6 +25,7 @@ interface ProfileInfoCard {
 }
 
 const localStorageNull: IUser = {
+  id: 1,
   name: "Иван",
   surname: "Иванов",
   avatar: testImg,
