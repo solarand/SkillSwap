@@ -1,100 +1,107 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { InputField } from "@/components/ui/input/InputField";
+
+export interface RegisterFormValues {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface IFormField {
+  name: "name" | "surname" | "email" | "password" | "confirmPassword";
+  type: string;
+  placeholder: string;
+  required: boolean;
+  autoComplete: string;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  readOnly?: boolean;
+}
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormValues>();
+
+  const onSubmit: SubmitHandler<RegisterFormValues> = (data) => {
+    console.log(data);
+  };
+
+  const formFields: IFormField[] = [
+    {
+      name: "name",
+      type: "text",
+      placeholder: "Имя",
+      required: true,
+      autoComplete: "off",
+    },
+    {
+      name: "surname",
+      type: "text",
+      placeholder: "Фамилия",
+      required: true,
+      autoComplete: "off",
+    },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      required: true,
+      autoComplete: "off",
+      onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+        e.target.removeAttribute("readonly");
+        if (e.target.value === "") {
+          e.target.setAttribute("autocomplete", "new-email");
+        }
+      },
+      readOnly: true,
+    },
+    {
+      name: "password",
+      type: "password",
+      placeholder: "Пароль",
+      required: true,
+      autoComplete: "new-password",
+    },
+    {
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "Подтвердите пароль",
+      required: true,
+      autoComplete: "new-password",
+    },
+  ];
 
   return (
     <div className="relative w-full h-screen">
       <div className="absolute inset-0 bg-black/45 backdrop-blur-sm z-0" />
 
       <div className="relative z-10 h-screen flex flex-col items-center justify-center">
-        <form className="shadow-2xl w-[600px] flex flex-col gap-6 p-8 rounded-3xl bg-white max-[600px]:w-full">
+        <form
+          className="shadow-2xl w-[600px] flex flex-col gap-6 p-8 rounded-3xl bg-white max-[600px]:w-full"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <h2 className="text-3xl font-bold text-cast-gray text-center mb-6">
             Создать аккаунт
           </h2>
 
-          <div className="flex flex-col gap-1">
-            <input
-              type="text"
-              placeholder="Имя"
-              className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          {formFields.map((el) => (
+            <InputField
+              key={el.name}
+              {...el}
+              register={register}
+              error={errors.name}
             />
-            <span className="text-red-500 text-xs mt-1 ml-1">errors.name</span>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <input
-              type="text"
-              placeholder="Фамилия"
-              className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <span className="text-red-500 text-xs mt-1 ml-1">
-              errors.surname
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <input
-              type="email"
-              placeholder="Email"
-              className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <span className="text-red-500 text-xs mt-1 ml-1">errors.email</span>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Пароль"
-                className="border p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5" />
-                ) : (
-                  <Eye className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-            <span className="text-red-500 text-xs mt-1 ml-1">
-              errors.password
-            </span>
-            <div className="text-xs text-gray-500 mt-1 ml-1">
-              Пароль должен содержать минимум 8 символов
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <div className="relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                placeholder="Пароль"
-                className="border p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              >
-                {showConfirmPassword ? (
-                  <EyeOff className="h-5 w-5" />
-                ) : (
-                  <Eye className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-            <span className="text-red-500 text-xs mt-1 ml-1">
-              errors.confirmPassword
-            </span>
-          </div>
+          ))}
 
           <button
             type="submit"

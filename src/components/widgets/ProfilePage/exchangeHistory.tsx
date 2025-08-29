@@ -1,14 +1,15 @@
 import { Filter } from "lucide-react";
-import HistoryCard, { type HistoryCardProps } from "./historyCard";
 import { ExchangeStatusFilter } from "./historyFilter";
 import { useState } from "react";
 import { initialHistory } from "@/utils/constants/profileConst";
+import type { IHistoryCard } from "@/utils/types/profileType";
+import HistoryCard from "./historyCard";
 
 export const ExchangeHistory = () => {
   const [defaultFilter, setDefaultFilter] = useState<string>("all");
   const [isOpenfilter, setIsOpenFilter] = useState(false);
   const [exchangeHistory, setExchangeHistory] =
-    useState<HistoryCardProps[]>(initialHistory);
+    useState<IHistoryCard[]>(initialHistory);
 
   const onFilterChange = (value: string, label: string) => {
     setExchangeHistory(initialHistory);

@@ -1,28 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
 
 import testImg from "@/assets/png/start-page/eng.jpg";
-
-export interface IUser {
-  id: number;
-  name: string;
-  surname: string;
-  avatar: string;
-  skills: string[];
-  rating: number;
-  completedProjects: number;
-  email: string;
-  description: string;
-}
-
-interface ProfileInfoCard {
-  name: string;
-  surname: string;
-  email: string;
-  description: string;
-  skills: string[];
-}
+import type { IUser, ProfileInfoCard } from "@/utils/types/profileType";
 
 const localStorageNull: IUser = {
   id: 1,

@@ -1,5 +1,5 @@
 import { Info } from "lucide-react";
-import type { HistoryCard } from "@/utils/types/profileType";
+import type { IHistoryCard } from "@/utils/types/profileType";
 
 const HistoryCard = ({
   title,
@@ -7,7 +7,7 @@ const HistoryCard = ({
   category,
   date,
   status,
-}: HistoryCard) => {
+}: IHistoryCard) => {
   function getStyle() {
     if (status === "Завершен") {
       return "bg-green-100 text-green-800";
