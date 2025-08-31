@@ -39,11 +39,11 @@ export interface IUser {
   name: string;
   surname: string;
   avatar: string;
-  skills: string[];
+  skills?: string[];
   rating: number;
   completedProjects: number;
   email: string;
-  description: string;
+  description?: string;
 }
 
 export interface ProfileInfoCard {

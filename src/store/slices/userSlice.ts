@@ -1,26 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-import testImg from "@/assets/png/start-page/eng.jpg";
 import type { IUser, ProfileInfoCard } from "@/utils/types/profileType";
+import type { IAuthResponse } from "@/utils/types/authType";
 
-const localStorageNull: IUser = {
-  id: 1,
-  name: "Иван",
-  surname: "Иванов",
-  avatar: testImg,
-  skills: ["Frontend", "UI/UX", "React", "TypeScript"],
-  rating: 4.8,
-  completedProjects: 24,
-  email: "ivanov@gmail.com",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-};
+const localStorageNull: IUser = {} as IUser;
 
 const initialStr = localStorage.getItem("UserData");
 const initialState: IUser = initialStr
   ? (JSON.parse(initialStr) as IUser)
   : localStorageNull;
+
+export let isAuth = false;
 
 export const UserSlice = createSlice({
   name: "user",
@@ -43,9 +33,20 @@ export const UserSlice = createSlice({
         localStorage.setItem("UserData", JSON.stringify(user));
       }
     },
+
+    registrationAction: (state, action: PayloadAction<IAuthResponse>) => {
+      if (action.payload) {
+        Object.assign(state, action.payload.user);
+        localStorage.removeItem("UserData");
+        localStorage.setItem("UserData", JSON.stringify(state));
+        localStorage.setItem("token", action.payload.accessToken);
+        isAuth = true;
+      }
+    },
   },
 });
 
-export const { updateInfo, updateAvatar } = UserSlice.actions;
+export const { updateInfo, updateAvatar, registrationAction } =
+  UserSlice.actions;
 
 export default UserSlice.reducer;

@@ -12,16 +12,16 @@ interface ProfileInfoCardProps {
   name: string;
   surname: string;
   email: string;
-  description: string;
-  skills: string[];
+  description?: string;
+  skills?: string[];
 }
 
 export const ProfileInfoCard = ({
   name,
   surname,
   email,
-  description,
-  skills: initialSkills,
+  description = "",
+  skills: initialSkills = [],
 }: ProfileInfoCardProps) => {
   const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);

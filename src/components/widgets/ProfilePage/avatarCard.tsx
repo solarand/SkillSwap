@@ -3,6 +3,8 @@ import { Camera, Star } from "lucide-react";
 import { ImageUploadModal } from "./ImageUploadModal";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateAvatar } from "@/store/slices/userSlice";
+import { config } from "@/utils/config";
+import { getProjectsEnding } from "@/utils/getProjectsEnding";
 
 interface AvatarCardProps {
   avatar: string;
@@ -33,7 +35,7 @@ export const AvatarCard = ({
       <div className="h-fit border-2 bg-white border-gray-200 rounded-xl w-full min-[870px]:w-1/3 flex flex-col items-center pt-8 pb-16 px-4 relative">
         <div className="relative w-40">
           <img
-            src={avatar}
+            src={`${config.API_URL}/${avatar}`}
             alt={`${name} ${surname}`}
             className="w-40 h-40 rounded-full object-cover object-center"
           />
@@ -47,9 +49,11 @@ export const AvatarCard = ({
         <h1 className="text-paragraph mt-5 font-bold font-sans">{`${name} ${surname}`}</h1>
         <span className="flex gap-2 text-gray-500 mt-2 font-semibold scale-105">
           <Star className="fill-yellow-300 stroke-amber-300" />
-          {rating}
+          {Number(rating)}
         </span>
-        <p className="text-gray-500 mt-2">{`${completedProjects} завершенных обмена`}</p>
+        <p className="text-gray-500 mt-2">
+          {getProjectsEnding(completedProjects)}
+        </p>
         <p className="text-gray-500 mt-2">На платформе с Январь 2025</p>
       </div>
 

@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { InputField } from "@/components/ui/input/InputField";
 import type { RegisterFormValues } from "@/utils/types/authType";
 import { authFormFields } from "@/utils/constants/authConst";
+import { useRegistrationMutation } from "@/api/authApi";
+import { useAppDispatch } from "@/hooks/redux";
+import { registrationAction } from "@/store/slices/userSlice";
 
 const RegisterPage = () => {
   const {
@@ -13,8 +16,20 @@ const RegisterPage = () => {
     watch,
   } = useForm<RegisterFormValues>();
 
-  const onSubmit: SubmitHandler<RegisterFormValues> = (data) => {
-    console.log(data);
+  const [regisration] = useRegistrationMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<RegisterFormValues> = async (formValues) => {
+    delete formValues.confirmPassword;
+
+    try {
+      const result = await regisration(formValues);
+      if (result.data) dispatch(registrationAction(result.data));
+      await navigate("/profile");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

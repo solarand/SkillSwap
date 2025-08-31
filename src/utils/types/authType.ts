@@ -1,4 +1,5 @@
 import type { UseFormRegister } from "react-hook-form";
+import type { IUser } from "./profileType";
 
 export interface InputFieldProps {
   nameField: "name" | "surname" | "email" | "password" | "confirmPassword";
@@ -18,7 +19,7 @@ export interface RegisterFormValues {
   surname: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 
 export interface IFormField {
@@ -34,4 +35,10 @@ export interface IFormField {
 export interface ILoginFormValues {
   email: string;
   password: string;
+}
+
+export interface IAuthResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: IUser;
 }
