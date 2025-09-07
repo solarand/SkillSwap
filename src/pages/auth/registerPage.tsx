@@ -6,7 +6,16 @@ import type { RegisterFormValues } from "@/utils/types/authType";
 import { authFormFields } from "@/utils/constants/authConst";
 import { useRegistrationMutation } from "@/api/authApi";
 import { useAppDispatch } from "@/hooks/redux";
-import { registrationAction } from "@/store/slices/userSlice";
+import { setTokens } from "@/store/slices/authSlice";
+import { authentication } from "@/store/slices/userSlice";
+
+interface ServerError {
+  status: number;
+  data: {
+    message: string;
+    errors: [];
+  };
+}
 
 const RegisterPage = () => {
   const {
@@ -14,6 +23,7 @@ const RegisterPage = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    setError,
   } = useForm<RegisterFormValues>();
 
   const [regisration] = useRegistrationMutation();
@@ -24,11 +34,29 @@ const RegisterPage = () => {
     delete formValues.confirmPassword;
 
     try {
-      const result = await regisration(formValues);
-      if (result.data) dispatch(registrationAction(result.data));
+      const result = await regisration(formValues).unwrap();
+
+      if (result) {
+        dispatch(
+          setTokens({
+            accessToken: result.accessToken,
+            refreshToken: result.refreshToken,
+          })
+        );
+        dispatch(authentication(result.user));
+      }
+
       await navigate("/profile");
     } catch (error) {
-      console.log(error);
+      const serverError = error as ServerError;
+      if (serverError?.status === 400) {
+        setError("email", {
+          type: "server",
+          message:
+            serverError?.data?.message ||
+            "Пользователь с таким email уже существует",
+        });
+      }
     }
   };
 

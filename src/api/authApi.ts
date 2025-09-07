@@ -1,13 +1,7 @@
-import { config } from "@/utils/config";
 import type { IAuthResponse, RegisterFormValues } from "@/utils/types/authType";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { api } from "@/api/api";
 
-export const authApi = createApi({
-  reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_URL,
-    credentials: "include",
-  }),
+export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
     registration: build.mutation<IAuthResponse, RegisterFormValues>({
       query: (data) => ({

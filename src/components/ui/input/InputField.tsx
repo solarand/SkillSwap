@@ -27,13 +27,30 @@ export const InputField: React.FC<InputFieldProps> = ({
     confirmPassword: "Подтвердите пароль",
   };
 
-  const validateField = {
-    password: (value: string) => authValidate.validatePassword(value),
-    email: (value: string) => authValidate.validateEmail(value),
-    name: (value: string) => authValidate.validateFirstName(value),
-    surname: (value: string) => authValidate.validateLastName(value),
-    confirmPassword: (value: string) =>
-      authValidate.validateConfirmPassword(value, watch("password")),
+  const validateField: Record<
+    string,
+    (value: string | undefined) => string | true | undefined
+  > = {
+    password: (value: string | undefined) => {
+      if (!value) return "Введите пароль";
+      return authValidate.validatePassword(value);
+    },
+    email: (value: string | undefined) => {
+      if (!value) return "Введите email";
+      return authValidate.validateEmail(value);
+    },
+    name: (value: string | undefined) => {
+      if (!value) return "Введите имя";
+      return authValidate.validateFirstName(value);
+    },
+    surname: (value: string | undefined) => {
+      if (!value) return "Введите фамилию";
+      return authValidate.validateLastName(value);
+    },
+    confirmPassword: (value: string | undefined) => {
+      if (!value) return "Подтвердите пароль";
+      return authValidate.validateConfirmPassword(value, watch("password"));
+    },
   };
 
   return (

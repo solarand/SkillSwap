@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { IUser, ProfileInfoCard } from "@/utils/types/profileType";
-import type { IAuthResponse } from "@/utils/types/authType";
 
 const localStorageNull: IUser = {} as IUser;
 
@@ -9,8 +8,6 @@ const initialStr = localStorage.getItem("UserData");
 const initialState: IUser = initialStr
   ? (JSON.parse(initialStr) as IUser)
   : localStorageNull;
-
-export let isAuth = false;
 
 export const UserSlice = createSlice({
   name: "user",
@@ -34,19 +31,16 @@ export const UserSlice = createSlice({
       }
     },
 
-    registrationAction: (state, action: PayloadAction<IAuthResponse>) => {
+    authentication: (state, action: PayloadAction<IUser>) => {
       if (action.payload) {
-        Object.assign(state, action.payload.user);
+        Object.assign(state, action.payload);
         localStorage.removeItem("UserData");
         localStorage.setItem("UserData", JSON.stringify(state));
-        localStorage.setItem("token", action.payload.accessToken);
-        isAuth = true;
       }
     },
   },
 });
 
-export const { updateInfo, updateAvatar, registrationAction } =
-  UserSlice.actions;
+export const { updateInfo, updateAvatar, authentication } = UserSlice.actions;
 
 export default UserSlice.reducer;
