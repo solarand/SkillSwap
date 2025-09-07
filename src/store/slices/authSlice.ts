@@ -34,6 +34,7 @@ const authSluce = createSlice({
       state.accessToken = "";
       state.refreshToken = "";
       localStorage.removeItem("token");
+      localStorage.removeItem("UserData");
     },
   },
 });

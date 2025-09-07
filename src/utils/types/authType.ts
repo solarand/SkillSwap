@@ -42,3 +42,11 @@ export interface IAuthResponse {
   refreshToken: string;
   user: IUser;
 }
+
+export interface ServerError {
+  status: number;
+  data: {
+    message: string;
+    errors: [];
+  };
+}

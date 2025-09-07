@@ -2,20 +2,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { InputField } from "@/components/ui/input/InputField";
-import type { RegisterFormValues } from "@/utils/types/authType";
+import type { RegisterFormValues, ServerError } from "@/utils/types/authType";
 import { authFormFields } from "@/utils/constants/authConst";
 import { useRegistrationMutation } from "@/api/authApi";
 import { useAppDispatch } from "@/hooks/redux";
 import { setTokens } from "@/store/slices/authSlice";
 import { authentication } from "@/store/slices/userSlice";
-
-interface ServerError {
-  status: number;
-  data: {
-    message: string;
-    errors: [];
-  };
-}
 
 const RegisterPage = () => {
   const {

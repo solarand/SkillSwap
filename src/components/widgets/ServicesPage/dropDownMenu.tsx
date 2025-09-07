@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { useLogout } from "@/hooks/logout";
 import { useNavigate } from "react-router-dom";
 
 const ServiceDropDownMenu = () => {
   const navigate = useNavigate();
+  const logoutAccount = useLogout();
 
   return (
     <div className="absolute right-0 top-12 mt-2 w-28 bg-white border border-gray-200 rounded-lg shadow-lg z-10 flex flex-col items-start">
@@ -13,7 +15,10 @@ const ServiceDropDownMenu = () => {
         Профиль
       </button>
 
-      <button className="px-4 py-2 text-sm w-full hover:bg-gray-100 cursor-pointer text-red-600">
+      <button
+        className="px-4 py-2 text-sm w-full hover:bg-gray-100 cursor-pointer text-red-600"
+        onClick={() => logoutAccount()}
+      >
         Выход
       </button>
     </div>

@@ -7,6 +7,7 @@ import { updateInfo } from "@/store/slices/userSlice";
 import SkillsInput from "./skillsInput";
 import type { ProfileFormData } from "@/utils/types/profileType";
 import SkillBadge from "@/components/ui/span/skillBadge";
+import { useLogout } from "@/hooks/logout";
 
 interface ProfileInfoCardProps {
   name: string;
@@ -35,6 +36,7 @@ export const ProfileInfoCard = ({
       skills: initialSkills,
     },
   });
+  const logoutAccount = useLogout();
 
   const onSubmit: SubmitHandler<ProfileFormData> = (data) => {
     if (isEditing) {
@@ -165,6 +167,7 @@ export const ProfileInfoCard = ({
           </button>
           <button
             type="button"
+            onClick={() => logoutAccount()}
             className="px-6 py-3 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors cursor-pointer max-[485px]:w-full"
           >
             Выйти из аккаунта
