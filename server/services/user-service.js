@@ -39,7 +39,8 @@ class UserService {
     );
     if (user.rowCount === 0) {
       throw ApiErorr.BadRequest(
-        "Пользователь с таким email не зарегестрирован"
+        "Пользователь с таким email не зарегестрирован",
+        ["email"]
       );
     }
 
@@ -49,7 +50,7 @@ class UserService {
     );
 
     if (!isPassword) {
-      throw ApiErorr.BadRequest("Неверный пароль");
+      throw ApiErorr.BadRequest("Неверный пароль", ["password"]);
     }
 
     const userDto = new UserDto(user.rows[0]);

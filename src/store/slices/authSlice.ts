@@ -1,3 +1,4 @@
+import { useCheckAuthAPIQuery } from "@/api/authApi";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
@@ -36,8 +37,12 @@ const authSluce = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("UserData");
     },
+
+    isNotUnauthorized(state) {
+      state.isAuth = false;
+    },
   },
 });
 
-export const { setTokens, clearToken } = authSluce.actions;
+export const { setTokens, clearToken, isNotUnauthorized } = authSluce.actions;
 export default authSluce.reducer;

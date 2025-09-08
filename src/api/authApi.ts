@@ -1,4 +1,8 @@
-import type { IAuthResponse, RegisterFormValues } from "@/utils/types/authType";
+import type {
+  IAuthResponse,
+  ILoginFormValues,
+  RegisterFormValues,
+} from "@/utils/types/authType";
 import { api } from "@/api/api";
 
 export const authApi = api.injectEndpoints({
@@ -10,6 +14,13 @@ export const authApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    login: build.mutation<IAuthResponse, ILoginFormValues>({
+      query: (data) => ({
+        url: "/api/login",
+        method: "POST",
+        body: data,
+      }),
+    }),
     logout: build.mutation<string, string>({
       query: (refresh) => ({
         url: "/api/logout",
@@ -17,7 +28,19 @@ export const authApi = api.injectEndpoints({
         body: refresh,
       }),
     }),
+
+    checkAuthAPI: build.query<IAuthResponse, void>({
+      query: () => ({
+        url: "/api/refresh",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useRegistrationMutation, useLogoutMutation } = authApi;
+export const {
+  useRegistrationMutation,
+  useLogoutMutation,
+  useLoginMutation,
+  useCheckAuthAPIQuery,
+} = authApi;

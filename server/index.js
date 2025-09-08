@@ -5,6 +5,7 @@ const router = require("./routes/index");
 require("dotenv").config();
 const errorMiddleware = require("./middlewares/error-middleware");
 const path = require("path");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 const PORT = process.env.PORT || 5000;

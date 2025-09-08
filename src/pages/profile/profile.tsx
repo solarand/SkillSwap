@@ -4,11 +4,27 @@ import { useAppSelector } from "@/hooks/redux";
 import ProfileTab from "@/components/widgets/ProfilePage/profileTab";
 import { MyServices } from "@/components/widgets/ProfilePage/mySrevices";
 import { ExchangeHistory } from "@/components/widgets/ProfilePage/exchangeHistory";
+import LoginPage from "../auth/loginPage";
+import { useEffect } from "react";
+import { useCheckAuth } from "@/hooks/checkAuth";
 
 const ProfilePage = () => {
   const tabs = useAppSelector(
     (state) => state.profileTabs.filter((el) => el.isActive)[0].name
   );
+
+  const { isLoading, isAuthenticated } = useCheckAuth();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {}, [token]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

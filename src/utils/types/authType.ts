@@ -47,6 +47,6 @@ export interface ServerError {
   status: number;
   data: {
     message: string;
-    errors: [];
+    errors: string[];
   };
 }

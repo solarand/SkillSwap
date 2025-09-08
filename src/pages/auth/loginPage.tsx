@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { useLoginMutation } from "@/api/authApi";
 import ErrorMessage from "@/components/ui/errorMsh";
+import { useAppDispatch } from "@/hooks/redux";
+import { setTokens } from "@/store/slices/authSlice";
+import { authentication } from "@/store/slices/userSlice";
 import authValidate from "@/utils/authValidate";
-import type { ILoginFormValues } from "@/utils/types/authType";
+import type { ILoginFormValues, ServerError } from "@/utils/types/authType";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,12 +18,48 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    setError,
   } = useForm<ILoginFormValues>();
 
   const passwordLength = watch("password");
 
-  const onSubmit: SubmitHandler<ILoginFormValues> = (data) => {
-    console.log(data);
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<ILoginFormValues> = async (data) => {
+    try {
+      const result = await login(data).unwrap();
+
+      if (result) {
+        dispatch(
+          setTokens({
+            accessToken: result.accessToken,
+            refreshToken: result.refreshToken,
+          })
+        );
+        dispatch(authentication(result.user));
+      }
+
+      await navigate("/profile");
+    } catch (error) {
+      const serverError = error as ServerError;
+
+      if (serverError?.status === 400) {
+        if (serverError?.data?.errors[0] === "email") {
+          setError("email", {
+            type: "server",
+            message: serverError?.data?.message,
+          });
+        }
+        if (serverError?.data?.errors[0] === "password") {
+          setError("password", {
+            type: "server",
+            message: serverError?.data?.message,
+          });
+        }
+      }
+    }
   };
 
   return (
