@@ -21,7 +21,7 @@ class UserService {
     const hashPasword = await bcrypt.hash(password, 3);
     const id = uuid.v4();
     const user = await pool.query(
-      "INSERT INTO users (id, email,password_hash, first_name, last_name) VALUES ($1, $2, $3, $4, $5) RETURNING id, email, first_name, last_name, rating, avatar, bio, completed_projects",
+      "INSERT INTO users (id, email,password_hash, first_name, last_name) VALUES ($1, $2, $3, $4, $5) RETURNING id, email, first_name, last_name, rating, avatar, bio, created_at, completed_projects",
       [id, email, hashPasword, name, surname]
     );
 

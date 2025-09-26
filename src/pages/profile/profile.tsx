@@ -7,23 +7,25 @@ import { ExchangeHistory } from "@/components/widgets/ProfilePage/exchangeHistor
 import LoginPage from "../auth/loginPage";
 import { useEffect } from "react";
 import { useCheckAuth } from "@/hooks/checkAuth";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const tabs = useAppSelector(
     (state) => state.profileTabs.filter((el) => el.isActive)[0].name
   );
 
-  const { isLoading, isAuthenticated } = useCheckAuth();
+  const { isLoading } = useCheckAuth();
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-  useEffect(() => {}, [token]);
+  useEffect(() => {
+    if (!token) {
+      void navigate("/login");
+    }
+  }, [token, navigate]);
 
   if (isLoading) {
     return <div>Loading...</div>;
-  }
-
-  if (!isAuthenticated) {
-    return <LoginPage />;
   }
 
   return (

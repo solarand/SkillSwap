@@ -1,4 +1,4 @@
-import type { HistoryCard } from "../types/profileType";
+import type { IHistoryCard } from "../types/profileType";
 
 export const cityOptions = [
   { value: "Москва", label: "Москва" },
@@ -13,7 +13,7 @@ export const cityOptions = [
   { value: "Ростов-на-Дону", label: "Ростов-на-Дону" },
 ];
 
-export const initialHistory: HistoryCard[] = [
+export const initialHistory: IHistoryCard[] = [
   {
     title: "Разработка веб-приложения",
     description: "Обмен услуг с дизайнером на создание UI/UX прототипа.",
@@ -42,4 +42,19 @@ export const statuses = [
   { value: "completed", label: "Завершен", id: "status-completed" },
   { value: "in-progress", label: "В процессе", id: "status-in-progress" },
   { value: "cancelled", label: "Отменен", id: "status-cancelled" },
+];
+
+export const MonthsOfNumber = [
+  "Января",
+  "Февраля",
+  "Марта",
+  "Апреля",
+  "Мая",
+  "Июня",
+  "Июля",
+  "Августа",
+  "Сентября",
+  "Октября",
+  "Ноября",
+  "Декабря",
 ];

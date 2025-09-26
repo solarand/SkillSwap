@@ -5,6 +5,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import { updateAvatar } from "@/store/slices/userSlice";
 import { config } from "@/utils/config";
 import { getProjectsEnding } from "@/utils/getProjectsEnding";
+import { transformData } from "@/utils/transformData";
 
 interface AvatarCardProps {
   avatar: string;
@@ -12,6 +13,7 @@ interface AvatarCardProps {
   surname: string;
   rating: number;
   completedProjects: number;
+  createdAt: string;
   onAvatarUpdate?: (newAvatar: string) => void;
 }
 
@@ -21,6 +23,7 @@ export const AvatarCard = ({
   surname,
   rating,
   completedProjects,
+  createdAt,
 }: AvatarCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -54,7 +57,9 @@ export const AvatarCard = ({
         <p className="text-gray-500 mt-2">
           {getProjectsEnding(completedProjects)}
         </p>
-        <p className="text-gray-500 mt-2">На платформе с Январь 2025</p>
+        <p className="text-gray-500 mt-2">
+          На платформе с {transformData(createdAt)}
+        </p>
       </div>
 
       <ImageUploadModal

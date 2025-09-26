@@ -1,4 +1,3 @@
-import { useCheckAuthAPIQuery } from "@/api/authApi";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {

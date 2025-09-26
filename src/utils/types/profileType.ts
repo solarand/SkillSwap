@@ -44,6 +44,7 @@ export interface IUser {
   completedProjects: number;
   email: string;
   description?: string;
+  createdAt: string;
 }
 
 export interface ProfileInfoCard {
