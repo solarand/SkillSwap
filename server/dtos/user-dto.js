@@ -8,6 +8,7 @@ module.exports = class UserDto {
   bio;
   completed_projects;
   createdAt;
+  skills;
 
   constructor(model) {
     this.id = model.id;
@@ -19,5 +20,6 @@ module.exports = class UserDto {
     this.bio = model.bio;
     this.completed_projects = model.completed_projects;
     this.createdAt = model.created_at;
+    this.skills = model.skills;
   }
 };

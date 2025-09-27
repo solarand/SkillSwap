@@ -4,7 +4,6 @@ import { useAppSelector } from "@/hooks/redux";
 import ProfileTab from "@/components/widgets/ProfilePage/profileTab";
 import { MyServices } from "@/components/widgets/ProfilePage/mySrevices";
 import { ExchangeHistory } from "@/components/widgets/ProfilePage/exchangeHistory";
-import LoginPage from "../auth/loginPage";
 import { useEffect } from "react";
 import { useCheckAuth } from "@/hooks/checkAuth";
 import { useNavigate } from "react-router-dom";
