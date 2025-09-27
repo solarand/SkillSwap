@@ -4,6 +4,8 @@ const uuid = require("uuid");
 const tokenService = require("../services/token-services");
 const UserDto = require("../dtos/user-dto");
 const ApiErorr = require("../exceptions/api-error");
+const path = require("path");
+const fs = require("fs").promises;
 require("dotenv").config();
 
 class UserService {
@@ -89,6 +91,70 @@ class UserService {
     await tokenService.saveToken(user.rows[0].id, tokens.refreshToken);
 
     return { ...tokens, user: userDto };
+  }
+
+  async updateAvatar(id, avatarDataUrl) {
+    let oldAvatarFileName = null;
+
+    try {
+      const userResult = await pool.query(
+        "SELECT avatar FROM users WHERE id = $1",
+        [id]
+      );
+
+      oldAvatarFileName = userResult.rows[0]?.avatar;
+
+      const matches = avatarDataUrl.match(
+        /^data:image\/([A-Za-z-+\/]+);base64,(.+)$/
+      );
+      if (!matches) {
+        throw new Error("Invalid Data URL format");
+      }
+
+      const format = matches[1];
+      const base64Data = matches[2];
+      const buffer = Buffer.from(base64Data, "base64");
+
+      const FileName = uuid.v4() + `.${format}`;
+      const filePath = path.resolve(__dirname, "..", "static", FileName);
+
+      await fs.writeFile(filePath, buffer);
+
+      const user = await pool.query(
+        "UPDATE users SET avatar=$1 WHERE id=$2 RETURNING avatar",
+        [FileName, id]
+      );
+
+      if (oldAvatarFileName !== "default_logo.png") {
+        const oldAvatarPath = path.resolve(
+          __dirname,
+          "..",
+          "static",
+          oldAvatarFileName
+        );
+        try {
+          await fs.unlink(oldAvatarPath);
+        } catch (deleteError) {
+          console.warn(
+            "Не удалось удалить старый аватар:",
+            deleteError.message
+          );
+        }
+      }
+
+      return user.rows[0].avatar;
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+
+      if (oldAvatarFileName) {
+        await pool.query("UPDATE users SET avatar=$1 WHERE id=$2", [
+          oldAvatarFileName,
+          id,
+        ]);
+      }
+
+      throw error;
+    }
   }
 }
 

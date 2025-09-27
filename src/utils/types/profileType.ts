@@ -35,7 +35,7 @@ export interface ProfileFormData {
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   name: string;
   surname: string;
   avatar: string;

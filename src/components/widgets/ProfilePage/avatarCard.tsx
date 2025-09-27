@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useState } from "react";
 import { Camera, Star } from "lucide-react";
 import { ImageUploadModal } from "./ImageUploadModal";
@@ -6,10 +7,12 @@ import { updateAvatar } from "@/store/slices/userSlice";
 import { config } from "@/utils/config";
 import { getProjectsEnding } from "@/utils/getProjectsEnding";
 import { transformData } from "@/utils/transformData";
+import { useUpdateInfoUserMutation } from "@/api/userApi";
 
 interface AvatarCardProps {
   avatar: string;
   name: string;
+  id: string;
   surname: string;
   rating: number;
   completedProjects: number;
@@ -20,6 +23,7 @@ interface AvatarCardProps {
 export const AvatarCard = ({
   avatar,
   name,
+  id,
   surname,
   rating,
   completedProjects,
@@ -27,10 +31,18 @@ export const AvatarCard = ({
 }: AvatarCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const [response] = useUpdateInfoUserMutation();
 
-  const handleAvatarUpdate = (newAvatar: string) => {
-    dispatch(updateAvatar(newAvatar));
-    setIsModalOpen(false);
+  const handleAvatarUpdate = async (newAvatar: string) => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const result = await response({ avatar: newAvatar, id: id }).unwrap();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+      dispatch(updateAvatar(result.user));
+      setIsModalOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

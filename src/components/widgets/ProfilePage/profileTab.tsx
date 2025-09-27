@@ -15,6 +15,7 @@ const ProfileTab = () => {
           rating={user.rating}
           completedProjects={user.completedProjects}
           createdAt={user.createdAt}
+          id={user.id}
         />
 
         <ProfileInfoCard
