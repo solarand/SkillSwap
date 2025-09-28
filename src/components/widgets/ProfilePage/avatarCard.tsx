@@ -2,41 +2,26 @@
 import { useState } from "react";
 import { Camera, Star } from "lucide-react";
 import { ImageUploadModal } from "./ImageUploadModal";
-import { useAppDispatch } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { updateAvatar } from "@/store/slices/userSlice";
 import { config } from "@/utils/config";
 import { getProjectsEnding } from "@/utils/getProjectsEnding";
 import { transformData } from "@/utils/transformData";
 import { useUpdateInfoUserMutation } from "@/api/userApi";
 
-interface AvatarCardProps {
-  avatar: string;
-  name: string;
-  id: string;
-  surname: string;
-  rating: number;
-  completedProjects: number;
-  createdAt: string;
-  onAvatarUpdate?: (newAvatar: string) => void;
-}
-
-export const AvatarCard = ({
-  avatar,
-  name,
-  id,
-  surname,
-  rating,
-  completedProjects,
-  createdAt,
-}: AvatarCardProps) => {
+export const AvatarCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const [response] = useUpdateInfoUserMutation();
 
   const handleAvatarUpdate = async (newAvatar: string) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const result = await response({ avatar: newAvatar, id: id }).unwrap();
+      const result = await response({
+        avatar: newAvatar,
+        id: user.id,
+      }).unwrap();
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       dispatch(updateAvatar(result.user));
       setIsModalOpen(false);
@@ -50,8 +35,8 @@ export const AvatarCard = ({
       <div className="h-fit border-2 bg-white border-gray-200 rounded-xl w-full min-[870px]:w-1/3 flex flex-col items-center pt-8 pb-16 px-4 relative">
         <div className="relative w-40">
           <img
-            src={`${config.API_URL}/${avatar}`}
-            alt={`${name} ${surname}`}
+            src={`${config.API_URL}/${user.avatar}`}
+            alt={`${user.name} ${user.surname}`}
             className="w-40 h-40 rounded-full object-cover object-center"
           />
           <button
@@ -61,16 +46,16 @@ export const AvatarCard = ({
             <Camera className="stroke-white" />
           </button>
         </div>
-        <h1 className="text-paragraph mt-5 font-bold font-sans">{`${name} ${surname}`}</h1>
+        <h1 className="text-paragraph mt-5 font-bold font-sans">{`${user.name} ${user.surname}`}</h1>
         <span className="flex gap-2 text-gray-500 mt-2 font-semibold scale-105">
           <Star className="fill-yellow-300 stroke-amber-300" />
-          {Number(rating)}
+          {Number(user.rating)}
         </span>
         <p className="text-gray-500 mt-2">
-          {getProjectsEnding(completedProjects)}
+          {getProjectsEnding(user.completedProjects)}
         </p>
         <p className="text-gray-500 mt-2">
-          На платформе с {transformData(createdAt)}
+          На платформе с {transformData(user?.createdAt)}
         </p>
       </div>
 

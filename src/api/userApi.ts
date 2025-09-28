@@ -8,7 +8,6 @@ export const userApi = api.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["User"],
     }),
   }),
 });
