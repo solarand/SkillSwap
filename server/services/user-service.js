@@ -156,6 +156,21 @@ class UserService {
       throw error;
     }
   }
+
+  async updateInfo(id, data) {
+    const query =
+      "UPDATE users SET first_name = $1, last_name = $2, email = $3, bio = $4, skills = $5 WHERE id = $6;";
+    const result = await pool.query(query, [
+      data.name,
+      data.surname,
+      data.email,
+      data.description,
+      data.skills,
+      id,
+    ]);
+
+    return "Данные успешно обновлены!";
+  }
 }
 
 module.exports = new UserService();

@@ -7,26 +7,26 @@ import { updateAvatar } from "@/store/slices/userSlice";
 import { config } from "@/utils/config";
 import { getProjectsEnding } from "@/utils/getProjectsEnding";
 import { transformData } from "@/utils/transformData";
-import { useUpdateInfoUserMutation } from "@/api/userApi";
+import { useUpdateAvatarMutation } from "@/api/userApi";
+import toast from "react-hot-toast";
 
 export const AvatarCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const [response] = useUpdateInfoUserMutation();
+  const [response] = useUpdateAvatarMutation();
 
   const handleAvatarUpdate = async (newAvatar: string) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const result = await response({
         avatar: newAvatar,
         id: user.id,
       }).unwrap();
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       dispatch(updateAvatar(result.user));
       setIsModalOpen(false);
-    } catch (error) {
-      console.log(error);
+      toast.success(result.msg);
+    } catch {
+      toast.error(`Произошла ошибка при обновлении аватара!`);
     }
   };
 

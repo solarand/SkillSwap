@@ -8,6 +8,8 @@ import { useRegistrationMutation } from "@/api/authApi";
 import { useAppDispatch } from "@/hooks/redux";
 import { setTokens } from "@/store/slices/authSlice";
 import { authentication } from "@/store/slices/userSlice";
+import toast from "react-hot-toast";
+import Notification from "@/components/ui/Notification";
 
 const RegisterPage = () => {
   const {
@@ -38,9 +40,11 @@ const RegisterPage = () => {
         dispatch(authentication(result.user));
       }
 
+      toast.success("Аккаунт успешно создан!");
       await navigate("/profile");
     } catch (error) {
       const serverError = error as ServerError;
+      toast.error("Ошибка регистрации");
       if (serverError?.status === 400) {
         setError("email", {
           type: "server",
@@ -54,6 +58,7 @@ const RegisterPage = () => {
 
   return (
     <div className="relative w-full h-screen">
+      <Notification />
       <div className="absolute inset-0 bg-black/45 backdrop-blur-sm z-0" />
 
       <div className="relative z-10 h-screen flex flex-col items-center justify-center">

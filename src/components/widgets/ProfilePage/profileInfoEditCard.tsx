@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Edit, Settings } from "lucide-react";
-import { useAppDispatch } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { updateInfo } from "@/store/slices/userSlice";
 import SkillsInput from "./skillsInput";
 import type { ProfileFormData } from "@/utils/types/profileType";
 import SkillBadge from "@/components/ui/span/skillBadge";
 import { useLogout } from "@/hooks/logout";
+import { useUpdateUserMutation } from "@/api/userApi";
+import toast, { Toaster } from "react-hot-toast";
+import Notification from "@/components/ui/Notification";
 
 interface ProfileInfoCardProps {
   name: string;
@@ -25,8 +28,11 @@ export const ProfileInfoCard = ({
   skills: initialSkills = [],
 }: ProfileInfoCardProps) => {
   const dispatch = useAppDispatch();
+  const id = useAppSelector((state) => state.user.id);
+  const [updateUser] = useUpdateUserMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [skills, setSkills] = useState<string[]>(initialSkills);
+
   const { register, handleSubmit, reset } = useForm<ProfileFormData>({
     defaultValues: {
       name,
@@ -38,14 +44,35 @@ export const ProfileInfoCard = ({
   });
   const logoutAccount = useLogout();
 
-  const onSubmit: SubmitHandler<ProfileFormData> = (data) => {
+  const onSubmit: SubmitHandler<ProfileFormData> = async (data) => {
     if (isEditing) {
-      dispatch(
-        updateInfo({
-          ...data,
-          skills,
-        })
-      );
+      const userData = {
+        ...data,
+        skills,
+      };
+
+      const hasChanges =
+        data.name !== name ||
+        data.surname !== surname ||
+        data.email !== email ||
+        data.description !== description ||
+        JSON.stringify(skills) !== JSON.stringify(initialSkills);
+
+      if (!hasChanges) {
+        setIsEditing(false);
+        return;
+      }
+
+      dispatch(updateInfo(userData));
+
+      try {
+        const res = await updateUser({ id: id, data: userData }).unwrap();
+
+        toast.success(res.msg);
+      } catch {
+        toast.error("Произошла ошибка при обновлении профиля");
+      }
+
       setIsEditing(false);
       reset({ ...data });
     }
@@ -53,12 +80,13 @@ export const ProfileInfoCard = ({
 
   return (
     <div className="border-2 bg-white border-gray-200 rounded-xl w-full min-[870px]:w-2/3 p-5 relative">
+      <Notification />
+
       {isEditing && <Edit className="h-5 w-5 absolute top-5 right-5" />}
 
       <h1 className="text-2xl font-bold mt-2 max-[500px]:text-xl">
         Информация о профиле
       </h1>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Остальные поля формы */}
         <div className="flex flex-col min-[870px]:flex-row gap-5 max-[870px]:gap-0">

@@ -5,11 +5,13 @@ import { useAppDispatch } from "@/hooks/redux";
 import { setTokens } from "@/store/slices/authSlice";
 import { authentication } from "@/store/slices/userSlice";
 import authValidate from "@/utils/authValidate";
-import type { ILoginFormValues, ServerError } from "@/utils/types/authType";
+import type { ILoginFormValues } from "@/utils/types/authType";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import Notification from "@/components/ui/Notification";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +20,6 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
     watch,
-    setError,
   } = useForm<ILoginFormValues>();
 
   const passwordLength = watch("password");
@@ -40,30 +41,17 @@ const LoginPage = () => {
         );
         dispatch(authentication(result.user));
       }
+      toast.success(`С возвращением, ${result.user.name}!`);
 
       await navigate("/profile");
-    } catch (error) {
-      const serverError = error as ServerError;
-
-      if (serverError?.status === 400) {
-        if (serverError?.data?.errors[0] === "email") {
-          setError("email", {
-            type: "server",
-            message: serverError?.data?.message,
-          });
-        }
-        if (serverError?.data?.errors[0] === "password") {
-          setError("password", {
-            type: "server",
-            message: serverError?.data?.message,
-          });
-        }
-      }
+    } catch {
+      toast.error("Неверный логин или пароль");
     }
   };
 
   return (
     <div className="relative w-full h-screen">
+      <Notification />
       <div className="absolute inset-0 bg-black/45 backdrop-blur-sm z-0" />
 
       <div className="relative z-10 pt-40 flex flex-col items-center">

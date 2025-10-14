@@ -4,11 +4,26 @@ const userService = require("../services/user-service");
 
 class UserController {
   async updateAvatar(req, res, next) {
-    const { avatar, id } = req.body;
+    try {
+      const { avatar, id } = req.body;
 
-    const user = await userService.updateAvatar(id, avatar);
+      const user = await userService.updateAvatar(id, avatar);
 
-    return res.json({ user });
+      return res.json({ user: user, msg: "Аватар успешно обновлен!" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateInfo(req, res, next) {
+    try {
+      const { id, data } = req.body;
+      const response = await userService.updateInfo(id, data);
+
+      return res.json({ status: 200, msg: response });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
