@@ -8,6 +8,7 @@ import ErrorMessage from "@/components/ui/errorMsh";
 import type { IService } from "@/utils/types/profileType";
 import { categoryMerge } from "@/utils/categoryMerge";
 import { categories } from "@/utils/constants/servicesConst";
+import { ActionButton } from "@/components/ui/buttons/buttons";
 
 interface AddServiceModalProps {
   isOpen: boolean;
@@ -78,13 +79,13 @@ export const AddServiceModal = ({
         </button>
 
         <h2 className="text-2xl font-bold text-gray-800 mb-6 max-[500px]:text-xl">
-          Добавить услугу
+          Добавление услуги
         </h2>
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col">
             <label className="text-sm font-semibold text-gray-600 max-[500px]:text-xs">
-              Название услуги
+              Название
             </label>
             <input
               {...register("title", { required: "Введите название услуги" })}
@@ -322,13 +323,10 @@ export const AddServiceModal = ({
           </div>
 
           <div className="flex gap-4 justify-end mt-6">
-            <button
-              type="submit"
-              className="flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors max-[500px]:w-full"
-            >
+            <ActionButton className="h-9 max-[500px]:w-full">
               <Plus className="h-4 w-4" />
               Добавить
-            </button>
+            </ActionButton>
           </div>
         </form>
       </div>

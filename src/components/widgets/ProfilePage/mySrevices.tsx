@@ -1,45 +1,46 @@
-import { Plus } from "lucide-react";
+import { Briefcase, Plus } from "lucide-react";
 import ServiseCard from "./historyServiseCard";
 import { AddServiceModal } from "./addServiceModal";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import type { ServiceCard } from "@/utils/types/profileType";
+import { ActionButton } from "@/components/ui/buttons/buttons";
 
 export const MyServices = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [services, setServices] = useState<ServiceCard[]>([
-    {
-      title: "Разработка веб-приложений",
-      description:
-        "Создание современных веб-приложений с использованием React и TypeScript.",
-      category: "Веб-разработка",
-      status: "Поиск партнера",
-      exchangeOffers: 0,
-      isUrgent: true,
-      location: "Онлайн",
-    },
-    {
-      title: "UI/UX дизайн",
-      description:
-        "Дизайн интерфейсов и прототипов для мобильных и веб-приложений.",
-      category: "Дизайн",
-      status: "Ожидание подтверждения",
-      exchangeOffers: 3,
-      isUrgent: false,
-      location: "Оффлайн",
-      city: "Москва",
-    },
-    {
-      title: "Оптимизация производительности",
-      description:
-        "Улучшение скорости загрузки и производительности веб-приложений.",
-      category: "Веб-разработка",
-      status: "Выполнение",
-      exchangeOffers: 0,
-      isUrgent: true,
-      location: "Онлайн",
-    },
+    // {
+    //   title: "Разработка веб-приложений",
+    //   description:
+    //     "Создание современных веб-приложений с использованием React и TypeScript.",
+    //   category: "Веб-разработка",
+    //   status: "Поиск партнера",
+    //   exchangeOffers: 0,
+    //   isUrgent: true,
+    //   location: "Онлайн",
+    // },
+    // {
+    //   title: "UI/UX дизайн",
+    //   description:
+    //     "Дизайн интерфейсов и прототипов для мобильных и веб-приложений.",
+    //   category: "Дизайн",
+    //   status: "Ожидание подтверждения",
+    //   exchangeOffers: 3,
+    //   isUrgent: false,
+    //   location: "Оффлайн",
+    //   city: "Москва",
+    // },
+    // {
+    //   title: "Оптимизация производительности",
+    //   description:
+    //     "Улучшение скорости загрузки и производительности веб-приложений.",
+    //   category: "Веб-разработка",
+    //   status: "Выполнение",
+    //   exchangeOffers: 0,
+    //   isUrgent: true,
+    //   location: "Онлайн",
+    // },
   ]);
 
   const handleAddService: SubmitHandler<ServiceCard> = (data) => {
@@ -51,22 +52,38 @@ export const MyServices = () => {
 
   return (
     <div className="border-2 bg-white border-gray-200 rounded-xl w-screen min-[1280px]:w-full max-[880px]:h-full mt-5 h-auto py-10 p-5 relative">
-      <button
-        className="absolute top-5 right-5 flex items-center gap-1 px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
-        onClick={() => setIsOpen(true)}
-      >
-        <Plus className="h-4 w-4" />
-        Добавить
-      </button>
-
-      <h1 className="text-2xl font-bold mt-2 max-[500px]:text-xl">
-        Мои услуги
-      </h1>
+      {services.length > 0 && (
+        <ActionButton
+          onClick={() => setIsOpen(true)}
+          className="absolute top-4 right-5 "
+        >
+          <Plus className="h-4 w-4" />
+          Добавить
+        </ActionButton>
+      )}
 
       <div className="mt-5 flex flex-col gap-4">
-        {services.map((service) => (
-          <ServiseCard key={service.title} {...service} />
-        ))}
+        {services.length > 0 ? (
+          services.map((service) => (
+            <ServiseCard key={service.title} {...service} />
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 px-8 bg-white rounded-xl border border-gray-200">
+            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              <Briefcase className="w-10 h-10 text-gray-400" />
+            </div>
+            <p className="text-gray-600 text-lg mb-2">У вас пока нет услуг</p>
+            <p className="text-gray-400 text-sm mb-6 max-[407px]:text-center">
+              Добавьте первую услугу, чтобы начать обмен
+            </p>
+            <ActionButton
+              className="px-8 py-3 transition-colors"
+              onClick={() => setIsOpen(true)}
+            >
+              <Plus className="size-4 max-[315px]:hidden" /> Добавить услугу
+            </ActionButton>
+          </div>
+        )}
       </div>
 
       <AddServiceModal
