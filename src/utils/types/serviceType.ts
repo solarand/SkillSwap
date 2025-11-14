@@ -6,7 +6,7 @@ export interface FilterFormValues {
   city: string;
 }
 
-export interface IService {
+export interface ICatalogService {
   id: string;
   name: string;
   rating: string;
@@ -16,4 +16,18 @@ export interface IService {
   category: string;
   description: string;
   srochno: boolean;
+}
+
+export interface IService {
+  id: string;
+  user_id: string;
+  title: string;
+  category: string;
+  description: string;
+  status: "active" | "paused" | "completed" | "draft";
+  is_completed: boolean;
+  is_urgent?: boolean;
+  location?: "online" | "offline";
+  created_at: string;
+  city?: string;
 }

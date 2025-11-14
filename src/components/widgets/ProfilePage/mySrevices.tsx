@@ -5,9 +5,14 @@ import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import type { ServiceCard } from "@/utils/types/profileType";
 import { ActionButton } from "@/components/ui/buttons/buttons";
+import { useGetUserServicesQuery } from "@/api/servicesApi";
 
 export const MyServices = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoading, data, error } = useGetUserServicesQuery();
+  console.log(isLoading, data, error);
+
+  // сделать сохранение data в стор
 
   const [services, setServices] = useState<ServiceCard[]>([
     // {
@@ -74,7 +79,7 @@ export const MyServices = () => {
             </div>
             <p className="text-gray-600 text-lg mb-2">У вас пока нет услуг</p>
             <p className="text-gray-400 text-sm mb-6 max-[407px]:text-center">
-              Добавьте первую услугу, чтобы начать обмен
+              Добавьте услугу, чтобы начать обмен
             </p>
             <ActionButton
               className="px-8 py-3 transition-colors"
