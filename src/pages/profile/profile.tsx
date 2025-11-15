@@ -1,9 +1,9 @@
 import HeaderProfilePage from "@/components/widgets/ProfilePage/header";
 import TabContainerProfilePage from "@/components/widgets/ProfilePage/tabContainer";
 import { useAppSelector } from "@/hooks/redux";
-import ProfileTab from "@/components/widgets/ProfilePage/profileTab";
-import { MyServices } from "@/components/widgets/ProfilePage/mySrevices";
-import { ExchangeHistory } from "@/components/widgets/ProfilePage/exchangeHistory";
+import ProfileTab from "@/components/widgets/ProfilePage/profileTab/profileTab";
+import { MyServices } from "@/components/widgets/ProfilePage/servicesTab/mySrevices";
+import { ExchangeHistory } from "@/components/widgets/ProfilePage/historyTab/exchangeHistory";
 import { useEffect } from "react";
 import { useCheckAuth } from "@/hooks/checkAuth";
 import { useNavigate } from "react-router-dom";

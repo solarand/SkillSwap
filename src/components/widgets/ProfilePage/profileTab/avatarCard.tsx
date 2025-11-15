@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useState } from "react";
 import { Camera, Star } from "lucide-react";
-import { ImageUploadModal } from "./ImageUploadModal";
+import { ImageUploadModal } from "../modals/ImageUploadModal";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { updateAvatar } from "@/store/slices/userSlice";
 import { config } from "@/utils/config";

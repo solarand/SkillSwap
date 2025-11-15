@@ -6,7 +6,7 @@ export interface IHistoryCard {
   status: "Завершен" | "В процессе" | "Отменен";
 }
 
-export interface ServiceCard {
+export interface IServiceCard {
   title: string;
   description: string;
   category: string;

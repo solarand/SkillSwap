@@ -1,9 +1,9 @@
 import { Briefcase, Plus } from "lucide-react";
-import ServiseCard from "./historyServiseCard";
-import { AddServiceModal } from "./addServiceModal";
+import ServiceCard from "./historyServiseCard";
+import { AddServiceModal } from "../modals/addServiceModal";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import type { ServiceCard } from "@/utils/types/profileType";
+import type { IServiceCard } from "@/utils/types/profileType";
 import { ActionButton } from "@/components/ui/buttons/buttons";
 import { useGetUserServicesQuery } from "@/api/servicesApi";
 
@@ -14,7 +14,7 @@ export const MyServices = () => {
 
   // сделать сохранение data в стор
 
-  const [services, setServices] = useState<ServiceCard[]>([
+  const [services, setServices] = useState<IServiceCard[]>([
     // {
     //   title: "Разработка веб-приложений",
     //   description:
@@ -48,7 +48,7 @@ export const MyServices = () => {
     // },
   ]);
 
-  const handleAddService: SubmitHandler<ServiceCard> = (data) => {
+  const handleAddService: SubmitHandler<IServiceCard> = (data) => {
     setIsOpen(false);
     data.status = "Поиск партнера";
     data.exchangeOffers = 0;
@@ -70,7 +70,7 @@ export const MyServices = () => {
       <div className="mt-5 flex flex-col gap-4">
         {services.length > 0 ? (
           services.map((service) => (
-            <ServiseCard key={service.title} {...service} />
+            <ServiceCard key={service.title} {...service} />
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-20 px-8 bg-white rounded-xl border border-gray-200">
