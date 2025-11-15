@@ -2,7 +2,6 @@ export interface FilterFormValues {
   category: string[];
   location: string;
   rating: string[];
-  sroch: string;
   city: string;
 }
 
@@ -15,7 +14,6 @@ export interface ICatalogService {
   title: string;
   category: string;
   description: string;
-  srochno: boolean;
 }
 
 export interface IService {
@@ -24,10 +22,10 @@ export interface IService {
   title: string;
   category: string;
   description: string;
-  status: "active" | "paused" | "completed" | "draft";
+  exchangeOffers?: number;
+  status?: "Поиск партнера" | "Ожидание подтверждения" | "Выполнение";
   is_completed: boolean;
-  is_urgent?: boolean;
-  location?: "online" | "offline";
+  location?: "Онлайн" | "Оффлайн";
   created_at: string;
   city?: string;
 }

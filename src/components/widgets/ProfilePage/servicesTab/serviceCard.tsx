@@ -1,6 +1,5 @@
-import LabelSrocho from "@/components/ui/span/srochno";
+import type { IService } from "@/utils/types/serviceType";
 import { Check, Edit, Eye, Info, Trash2 } from "lucide-react";
-import type { IServiceCard } from "@/utils/types/profileType";
 
 const ServiceCard = ({
   title,
@@ -9,15 +8,13 @@ const ServiceCard = ({
   exchangeOffers = 0,
   status,
   location,
-  isUrgent = false,
   city = "",
-}: IServiceCard) => {
+}: IService) => {
   return (
     <>
       {status === "Поиск партнера" && (
         <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4 relative">
           <div className="flex-1">
-            {isUrgent && <LabelSrocho />}
             <h2 className="text-lg font-semibold">{title}</h2>
             <p className="text-gray-600 mt-1">{description}</p>
             <p className="text-sm text-gray-500 mt-1">Категория: {category}</p>
@@ -45,7 +42,6 @@ const ServiceCard = ({
       {status === "Ожидание подтверждения" && (
         <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4 relative">
           <div className="flex-1">
-            {isUrgent && <LabelSrocho />}
             <h2 className="text-lg font-semibold">{title}</h2>
             <p className="text-gray-600 mt-1">{description}</p>
             <p className="text-sm text-gray-500 mt-1">Категория: {category}</p>
@@ -81,7 +77,6 @@ const ServiceCard = ({
       {status === "Выполнение" && (
         <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4 relative">
           <div className="flex-1">
-            {isUrgent && <LabelSrocho />}
             <h2 className="text-lg font-semibold">{title} </h2>
             <p className="text-gray-600 mt-1">{description} </p>
             <p className="text-sm text-gray-500 mt-1">Категория: {category}</p>

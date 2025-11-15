@@ -1,5 +1,6 @@
 import type { IService } from "@/utils/types/serviceType";
 import { api } from "./api";
+import type { IResponse } from "@/utils/types/api";
 
 export const servicesApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +10,15 @@ export const servicesApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    addUserService: build.mutation<IResponse, IService>({
+      query: (data) => ({
+        url: "/api/createService/",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetUserServicesQuery } = servicesApi;
+export const { useGetUserServicesQuery, useAddUserServiceMutation } =
+  servicesApi;

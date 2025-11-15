@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Edit, Settings } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { updateInfo } from "@/store/slices/userSlice";
-import SkillsInput from "./skillsInput";
 import type { ProfileFormData } from "@/utils/types/profileType";
 import SkillBadge from "@/components/ui/span/skillBadge";
 import { useLogout } from "@/hooks/logout";
 import { useUpdateUserMutation } from "@/api/userApi";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Notification from "@/components/ui/Notification";
+import SkillsInput from "./skillsInput";
 
 interface ProfileInfoCardProps {
   name: string;

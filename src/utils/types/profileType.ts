@@ -6,17 +6,6 @@ export interface IHistoryCard {
   status: "Завершен" | "В процессе" | "Отменен";
 }
 
-export interface IServiceCard {
-  title: string;
-  description: string;
-  category: string;
-  exchangeOffers?: number;
-  status?: "Поиск партнера" | "Ожидание подтверждения" | "Выполнение";
-  isUrgent?: boolean;
-  location?: string;
-  city?: string;
-}
-
 export interface IService {
   title: string;
   description: string;

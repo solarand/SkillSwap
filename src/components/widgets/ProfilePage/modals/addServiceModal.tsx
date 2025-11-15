@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { cityOptions } from "@/utils/constants/profileConst";
 import ErrorMessage from "@/components/ui/errorMsh";
-import type { IService } from "@/utils/types/profileType";
+import type { IService } from "@/utils/types/serviceType";
 import { categoryMerge } from "@/utils/categoryMerge";
 import { categories } from "@/utils/constants/servicesConst";
 import { ActionButton } from "@/components/ui/buttons/buttons";
@@ -33,7 +33,6 @@ export const AddServiceModal = ({
       title: "",
       description: "",
       category: "",
-      isUrgent: false,
       location: "Онлайн",
       city: "",
     },
@@ -48,7 +47,6 @@ export const AddServiceModal = ({
         title: "",
         description: "",
         category: "",
-        isUrgent: false,
         location: "Онлайн",
         city: "",
       });
@@ -306,21 +304,6 @@ export const AddServiceModal = ({
               {errors.city && <ErrorMessage message={errors.city.message} />}
             </div>
           )}
-
-          <div className="space-y-2 mb-4">
-            <label className="text-sm font-semibold text-gray-600 max-[500px]:text-xs">
-              Срочно?
-            </label>
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                {...register("isUrgent")}
-                type="checkbox"
-                value="true"
-                className="h-4 w-4 text-blue-600 border-gray-200 checked:bg-blue-600 focus:ring-blue-600 focus:ring-2"
-              />
-              Да
-            </label>
-          </div>
 
           <div className="flex gap-4 justify-end mt-6">
             <ActionButton className="h-9 max-[500px]:w-full">

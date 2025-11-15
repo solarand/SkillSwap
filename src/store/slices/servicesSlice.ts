@@ -6,11 +6,17 @@ export const UserServicesSlice = createSlice({
   initialState: [] as IService[],
   reducers: {
     setServices: (state, action: PayloadAction<IService[]>) => {
-      state = [...action.payload];
+      return action.payload;
+    },
+
+    addServices: (state, action: PayloadAction<IService>) => {
+      state.push({
+        ...action.payload,
+      });
     },
   },
 });
 
-export const { setServices } = UserServicesSlice.actions;
+export const { setServices, addServices } = UserServicesSlice.actions;
 
 export default UserServicesSlice.reducer;
