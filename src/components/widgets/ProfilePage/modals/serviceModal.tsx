@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Plus, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useMemo, useState } from "react";
 import Select from "react-select";

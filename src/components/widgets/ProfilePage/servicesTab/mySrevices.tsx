@@ -8,15 +8,16 @@ import {
   useGetUserServicesQuery,
 } from "@/api/servicesApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { addServices, setServices } from "@/store/slices/servicesSlice";
+import { setServices } from "@/store/slices/servicesSlice";
 import type { IService } from "@/utils/types/serviceType";
 import toast from "react-hot-toast";
-import Notification from "@/components/ui/Notification";
 import { ServiceModal } from "../modals/serviceModal";
 
 export const MyServices = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoading, data } = useGetUserServicesQuery();
+  const { isLoading, data } = useGetUserServicesQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const [create] = useAddUserServiceMutation();
   const services = useAppSelector((state) => state.services);
   const dispatch = useAppDispatch();
@@ -64,9 +65,9 @@ export const MyServices = () => {
     data.status = "Поиск партнера";
     data.exchangeOffers = 0;
     const res = await create(data).unwrap();
-    dispatch(addServices(data));
 
     if (res.status === 200) {
+      dispatch(setServices(res.data ? res.data : []));
       toast.success(res.message);
     }
   };
@@ -75,8 +76,6 @@ export const MyServices = () => {
 
   return (
     <div className="border-2 bg-white border-gray-200 rounded-xl w-screen min-[1280px]:w-full max-[880px]:h-full mt-5 h-auto py-10 p-5 relative">
-      <Notification />
-
       {services.length > 0 && (
         <ActionButton
           onClick={() => setIsOpen(true)}

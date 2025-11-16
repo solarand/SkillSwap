@@ -16,13 +16,19 @@ class ServicesService {
 
     await pool.query(
       `
-            INSERT INTO services (
+       INSERT INTO services (
                 id, user_id, title, description, category, location, city, status
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
-            
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         `,
       [serviceId, userId, title, description, category, location, city, status]
     );
+
+    const newData = await pool.query(
+      `SELECT * FROM services WHERE user_id=$1`,
+      [userId]
+    );
+
+    return newData.rows;
   }
   async deleteService(serviceId) {
     await pool.query(

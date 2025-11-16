@@ -32,7 +32,7 @@ export interface IUser {
   rating: number;
   completedProjects: number;
   email: string;
-  description?: string;
+  bio?: string;
   createdAt: string;
 }
 

@@ -9,7 +9,6 @@ const initialState: IUser = initialStr
       try {
         return JSON.parse(initialStr) as IUser;
       } catch (e) {
-        console.error("Failed to parse UserData from localStorage:", e);
         return localStorageNull;
       }
     })()

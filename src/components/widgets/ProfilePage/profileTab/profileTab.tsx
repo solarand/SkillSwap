@@ -4,6 +4,7 @@ import { ProfileInfoCard } from "./profileInfoEditCard";
 
 const ProfileTab = () => {
   const user = useAppSelector((state) => state.user);
+  console.log(user);
 
   return (
     <div className="w-full flex justify-center max-[1280px]:w-screen">
@@ -14,7 +15,7 @@ const ProfileTab = () => {
           name={user.name}
           surname={user.surname}
           email={user.email}
-          description={user.description}
+          description={user.bio}
           skills={user.skills}
         />
       </div>

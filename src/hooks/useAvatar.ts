@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { IUser } from "@/utils/types/profileType";
 import { useAppSelector } from "./redux";
 
 export const useAvatar = () => {
@@ -15,7 +14,5 @@ export const useAvatar = () => {
     }
   }, [user?.id, user?.avatar]);
 
-  console.log(user?.avatar);
-  console.log(avatarUrl);
   return avatarUrl;
 };

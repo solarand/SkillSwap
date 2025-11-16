@@ -3,7 +3,6 @@ import {
   useDeleteUserServiceMutation,
   useUpdateUserServiceMutation,
 } from "@/api/servicesApi";
-import Notification from "@/components/ui/Notification";
 import { useAppDispatch } from "@/hooks/redux";
 import {
   deleteServices,
@@ -42,10 +41,10 @@ const ServiceCard = ({ service }: { service: IService }) => {
 
   const editService = async (data: IService): Promise<void> => {
     setIsOpenEdit(false);
+    console.log(data);
     const res = await updateAPI(data);
     if (res.data?.status === 200) {
       dispatch(updateUserService(data));
-
       toast.success(res.data.message);
     }
   };
@@ -64,7 +63,6 @@ const ServiceCard = ({ service }: { service: IService }) => {
         service={service}
         handleAddService={editService}
       />
-      <Notification />
       {service.status === "Поиск партнера" && (
         <div className="border border-gray-200 rounded-lg p-4 flex flex-col min-[870px]:flex-row gap-4 relative">
           <div className="flex-1">

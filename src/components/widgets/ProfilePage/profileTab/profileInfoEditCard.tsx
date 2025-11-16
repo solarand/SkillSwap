@@ -9,7 +9,6 @@ import SkillBadge from "@/components/ui/span/skillBadge";
 import { useLogout } from "@/hooks/logout";
 import { useUpdateUserMutation } from "@/api/userApi";
 import toast from "react-hot-toast";
-import Notification from "@/components/ui/Notification";
 import SkillsInput from "./skillsInput";
 
 interface ProfileInfoCardProps {
@@ -80,8 +79,6 @@ export const ProfileInfoCard = ({
 
   return (
     <div className="border-2 bg-white border-gray-200 rounded-xl w-full min-[870px]:w-2/3 p-5 relative">
-      <Notification />
-
       {isEditing && <Edit className="h-5 w-5 absolute top-5 right-5" />}
 
       <h1 className="text-2xl font-bold mt-2 max-[500px]:text-xl">
