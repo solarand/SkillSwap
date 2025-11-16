@@ -41,7 +41,6 @@ const ServiceCard = ({ service }: { service: IService }) => {
 
   const editService = async (data: IService): Promise<void> => {
     setIsOpenEdit(false);
-    console.log(data);
     const res = await updateAPI(data);
     if (res.data?.status === 200) {
       dispatch(updateUserService(data));
