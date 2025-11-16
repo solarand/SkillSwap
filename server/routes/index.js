@@ -18,5 +18,15 @@ router.patch("/updateInfo", authMiddleware, userController.updateInfo);
 // services routes
 router.get("/userServices", authMiddleware, servicesController.getUserServices);
 router.post("/createService", authMiddleware, servicesController.addService);
+router.delete(
+  "/deleteService/:serviceId",
+  authMiddleware,
+  servicesController.deleteService
+);
+router.patch(
+  "/updateService/:serviceId",
+  authMiddleware,
+  servicesController.updateService
+);
 
 module.exports = router;

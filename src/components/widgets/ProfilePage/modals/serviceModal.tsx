@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Plus, X } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { cityOptions } from "@/utils/constants/profileConst";
 import ErrorMessage from "@/components/ui/errorMsh";
@@ -10,17 +10,30 @@ import { categoryMerge } from "@/utils/categoryMerge";
 import { categories } from "@/utils/constants/servicesConst";
 import { ActionButton } from "@/components/ui/buttons/buttons";
 
-interface AddServiceModalProps {
+interface serviceModalProps {
   isOpen: boolean;
   onClose: () => void;
   handleAddService: (data: IService) => void;
+  service?: IService;
 }
 
-export const AddServiceModal = ({
+export const ServiceModal = ({
   isOpen,
   onClose,
   handleAddService,
-}: AddServiceModalProps) => {
+  service,
+}: serviceModalProps) => {
+  const defaultValues = useMemo(
+    () => ({
+      title: service?.title ?? "",
+      description: service?.description ?? "",
+      category: service?.category ?? "",
+      location: service?.location ?? "Онлайн",
+      city: service?.city ?? "",
+    }),
+    [service]
+  );
+
   const {
     register,
     handleSubmit,
@@ -29,13 +42,7 @@ export const AddServiceModal = ({
     control,
     watch,
   } = useForm<IService>({
-    defaultValues: {
-      title: "",
-      description: "",
-      category: "",
-      location: "Онлайн",
-      city: "",
-    },
+    defaultValues: defaultValues,
   });
 
   const categoryOptions = categoryMerge(categories);
@@ -43,16 +50,10 @@ export const AddServiceModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      reset({
-        title: "",
-        description: "",
-        category: "",
-        location: "Онлайн",
-        city: "",
-      });
-      setIsOffline(false);
+      reset(defaultValues);
+      setIsOffline(() => (defaultValues?.location === "Онлайн" ? false : true));
     }
-  }, [isOpen, reset]);
+  }, [isOpen, reset, defaultValues]);
 
   const location = watch("location");
   useEffect(() => {
@@ -62,7 +63,11 @@ export const AddServiceModal = ({
   if (!isOpen) return null;
 
   const onSubmit = (data: IService) => {
-    handleAddService(data);
+    if (service) {
+      handleAddService({ ...service, ...data });
+    } else {
+      handleAddService(data);
+    }
     onClose();
   };
 
@@ -77,7 +82,7 @@ export const AddServiceModal = ({
         </button>
 
         <h2 className="text-2xl font-bold text-gray-800 mb-6 max-[500px]:text-xl">
-          Добавление услуги
+          {service ? "Редактирование услуги" : "Добавление услуги"}
         </h2>
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -307,8 +312,7 @@ export const AddServiceModal = ({
 
           <div className="flex gap-4 justify-end mt-6">
             <ActionButton className="h-9 max-[500px]:w-full">
-              <Plus className="h-4 w-4" />
-              Добавить
+              {service ? "Изменить" : "Добавить"}
             </ActionButton>
           </div>
         </form>

@@ -24,6 +24,24 @@ class ServicesService {
       [serviceId, userId, title, description, category, location, city, status]
     );
   }
+  async deleteService(serviceId) {
+    await pool.query(
+      `
+            DELETE FROM services WHERE id=$1
+        `,
+      [serviceId]
+    );
+  }
+  async updateService(serviceId, service) {
+    const { title, description, category, location, city, status } = service;
+
+    await pool.query(
+      `
+            UPDATE services SET title=$1, description=$2, category=$3, location=$4, city=$5, status=$6 WHERE id=$7
+        `,
+      [title, description, category, location, city, status, serviceId]
+    );
+  }
 }
 
 module.exports = new ServicesService();

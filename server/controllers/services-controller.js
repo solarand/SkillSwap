@@ -21,6 +21,27 @@ class ServicesController {
       next(error);
     }
   }
+
+  async deleteService(req, res, next) {
+    try {
+      const { serviceId } = req.params;
+      await servicesService.deleteService(serviceId);
+      return res.json({ status: 200, message: "Услуга удалена!" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateService(req, res, next) {
+    try {
+      const { serviceId } = req.params;
+      const serviceData = req.body;
+      await servicesService.updateService(serviceId, serviceData);
+      return res.json({ status: 200, message: "Услуга обновлена!" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new ServicesController();

@@ -17,8 +17,25 @@ export const servicesApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    deleteUserService: build.mutation<IResponse, string>({
+      query: (id) => ({
+        url: `/api/deleteService/${id}`,
+        method: "DELETE",
+      }),
+    }),
+    updateUserService: build.mutation<IResponse, IService>({
+      query: (data) => ({
+        url: `/api/updateService/${data.id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetUserServicesQuery, useAddUserServiceMutation } =
-  servicesApi;
+export const {
+  useGetUserServicesQuery,
+  useAddUserServiceMutation,
+  useDeleteUserServiceMutation,
+  useUpdateUserServiceMutation,
+} = servicesApi;

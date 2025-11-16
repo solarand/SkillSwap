@@ -5,7 +5,7 @@ export const UserServicesSlice = createSlice({
   name: "services",
   initialState: [] as IService[],
   reducers: {
-    setServices: (state, action: PayloadAction<IService[]>) => {
+    setServices: (_state, action: PayloadAction<IService[]>) => {
       return action.payload;
     },
 
@@ -14,9 +14,20 @@ export const UserServicesSlice = createSlice({
         ...action.payload,
       });
     },
+    deleteServices: (state, action: PayloadAction<string>) => {
+      return state.filter((el) => {
+        return el.id !== action.payload;
+      });
+    },
+    updateUserService: (state, action: PayloadAction<IService>) => {
+      return state.map((el) =>
+        el.id === action.payload.id ? action.payload : el
+      );
+    },
   },
 });
 
-export const { setServices, addServices } = UserServicesSlice.actions;
+export const { setServices, addServices, deleteServices, updateUserService } =
+  UserServicesSlice.actions;
 
 export default UserServicesSlice.reducer;

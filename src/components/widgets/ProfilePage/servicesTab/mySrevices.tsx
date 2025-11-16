@@ -1,6 +1,5 @@
 import { Briefcase, Plus } from "lucide-react";
 import ServiceCard from "./serviceCard";
-import { AddServiceModal } from "../modals/addServiceModal";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { ActionButton } from "@/components/ui/buttons/buttons";
@@ -13,6 +12,7 @@ import { addServices, setServices } from "@/store/slices/servicesSlice";
 import type { IService } from "@/utils/types/serviceType";
 import toast from "react-hot-toast";
 import Notification from "@/components/ui/Notification";
+import { ServiceModal } from "../modals/serviceModal";
 
 export const MyServices = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,37 +25,39 @@ export const MyServices = () => {
     if (data) dispatch(setServices(data));
   }, [data, dispatch]);
 
-  // {
-  //   title: "Разработка веб-приложений",
-  //   description:
-  //     "Создание современных веб-приложений с использованием React и TypeScript.",
-  //   category: "Веб-разработка",
-  //   status: "Поиск партнера",
-  //   exchangeOffers: 0,
-  //   isUrgent: true,
-  //   location: "Онлайн",
-  // },
-  // {
-  //   title: "UI/UX дизайн",
-  //   description:
-  //     "Дизайн интерфейсов и прототипов для мобильных и веб-приложений.",
-  //   category: "Дизайн",
-  //   status: "Ожидание подтверждения",
-  //   exchangeOffers: 3,
-  //   isUrgent: false,
-  //   location: "Оффлайн",
-  //   city: "Москва",
-  // },
-  // {
-  //   title: "Оптимизация производительности",
-  //   description:
-  //     "Улучшение скорости загрузки и производительности веб-приложений.",
-  //   category: "Веб-разработка",
-  //   status: "Выполнение",
-  //   exchangeOffers: 0,
-  //   isUrgent: true,
-  //   location: "Онлайн",
-  // },
+  // const e = [
+  //   {
+  //     id: '1',
+  //     title: "Разработка веб-приложений",
+  //     description:
+  //       "Создание современных веб-приложений с использованием React и TypeScript.",
+  //     category: "Веб-разработка",
+  //     status: "Поиск партнера",
+  //     exchangeOffers: 0,
+  //     location: "Онлайн",
+  //   },
+  //   {
+  //     id: '2',
+  //     title: "UI/UX дизайн",
+  //     description:
+  //       "Дизайн интерфейсов и прототипов для мобильных и веб-приложений.",
+  //     category: "Дизайн",
+  //     status: "Ожидание подтверждения",
+  //     exchangeOffers: 3,
+  //     location: "Оффлайн",
+  //     city: "Москва",
+  //   },
+  //   {
+  //     id: '',
+  //     title: "Оптимизация производительности",
+  //     description:
+  //       "Улучшение скорости загрузки и производительности веб-приложений.",
+  //     category: "Веб-разработка",
+  //     status: "Выполнение",
+  //     exchangeOffers: 0,
+  //     location: "Онлайн",
+  //   },
+  // ];
 
   const handleAddService: SubmitHandler<IService> = async (data) => {
     setIsOpen(false);
@@ -88,7 +90,7 @@ export const MyServices = () => {
       <div className="mt-5 flex flex-col gap-4">
         {services.length > 0 ? (
           services.map((service) => (
-            <ServiceCard key={service.id} {...service} />
+            <ServiceCard key={service.id} service={service} />
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-20 px-8 bg-white rounded-xl border border-gray-200">
@@ -109,7 +111,7 @@ export const MyServices = () => {
         )}
       </div>
 
-      <AddServiceModal
+      <ServiceModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         handleAddService={handleAddService}
