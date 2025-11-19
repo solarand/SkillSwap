@@ -7,6 +7,7 @@ export interface FilterFormValues {
 
 export interface ICatalogService {
   id: string;
+  userId: string;
   name: string;
   rating: string;
   reviews: number;
@@ -14,6 +15,13 @@ export interface ICatalogService {
   title: string;
   category: string;
   description: string;
+  avatar: string;
+}
+
+export interface IGetForCatalog {
+  total: number;
+  data: ICatalogService[];
+  pages: number;
 }
 
 export interface IService {
@@ -28,4 +36,10 @@ export interface IService {
   location?: "Онлайн" | "Оффлайн";
   created_at: string;
   city?: string;
+}
+
+export interface IGetServices {
+  page?: number;
+  filter?: string[];
+  sort?: string;
 }

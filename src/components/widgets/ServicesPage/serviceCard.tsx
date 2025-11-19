@@ -1,3 +1,5 @@
+import Avatar from "@/components/ui/avatar";
+import { getReviewsText } from "@/utils/helpers/pluralize";
 import type { ICatalogService } from "@/utils/types/serviceType";
 import { Star } from "lucide-react";
 
@@ -9,11 +11,12 @@ const ServiceCard = ({
   location,
   title,
   reviews,
+  avatar,
 }: ICatalogService) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 relative">
-      <div className="flex items-center gap-2 sm:gap-3">
-        <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gray-300 rounded-full" />{" "}
+      <div className="flex items-center gap-2 sm:gap-3 hover:bg-gray-50 transition-all cursor-pointer hover:rounded-xl hover:p-1">
+        <Avatar avatar={avatar} />
         <div>
           <span className="text-sm font-medium text-gray-800">{name}</span>
           <div className="flex items-center gap-1">
@@ -23,15 +26,17 @@ const ServiceCard = ({
             </span>
             <span className="text-gray-400">·</span>
             <span className="text-sm text-gray-400">
-              ({`${reviews} отзыва`}){" "}
+              ({getReviewsText(Number(reviews))}){" "}
             </span>{" "}
           </div>
         </div>
       </div>
       <span
-        className={`text-sm ${location === "Онлайн" ? "text-green-600" : "text-red-600"}`}
+        className={`text-sm ${location.split(" ")[0] === "Онлайн" ? "text-green-600" : "text-red-600"}`}
       >
-        {location}
+        {location.split(" ")[0] === "Онлайн"
+          ? location.split(" ")[0]
+          : location}
       </span>
       <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
       <span className="text-sm text-gray-600">Категория: {category}</span>

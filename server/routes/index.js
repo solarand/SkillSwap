@@ -4,6 +4,7 @@ const regestrationController = require("../controllers/regestragion-controller")
 const userController = require("../controllers/user-controller");
 const authMiddleware = require("../middlewares/auth-middleware");
 const servicesController = require("../controllers/services-controller");
+const catalogController = require("../controllers/catalog-controller");
 
 const router = new Router();
 
@@ -28,5 +29,8 @@ router.patch(
   authMiddleware,
   servicesController.updateService
 );
+
+// catalog routes
+router.get("/catalog", authMiddleware, catalogController.getServices);
 
 module.exports = router;
