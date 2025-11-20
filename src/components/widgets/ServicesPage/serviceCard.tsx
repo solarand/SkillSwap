@@ -41,8 +41,8 @@ const ServiceCard = ({
         className={`text-sm ${location.split(" ")[0] === "Онлайн" ? "text-green-600" : "text-red-600"}`}
       >
         {location.split(" ")[0] === "Онлайн"
-          ? location.split(" ")[0]
-          : location}
+          ? "Удаленно"
+          : location.split(" ")[1].slice(1, -1)}
       </span>
       <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
       <span className="text-sm text-gray-600">Категория: {category}</span>

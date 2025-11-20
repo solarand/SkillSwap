@@ -198,7 +198,7 @@ export const ServiceModal = ({
 
           <div className="flex flex-col">
             <label className="text-sm font-semibold text-gray-600 max-[500px]:text-xs">
-              Тип услуги
+              Формат услуги
             </label>
             <div className="space-y-2 mt-1">
               <label className="flex items-center gap-2 text-sm text-gray-600">
@@ -209,7 +209,7 @@ export const ServiceModal = ({
                   className="h-4 w-4 text-blue-600 border-gray-200 checked:bg-blue-600 focus:ring-blue-600 focus:ring-2"
                   onClick={() => setIsOffline(false)}
                 />
-                Онлайн
+                Удаленный
               </label>
               <label className="flex items-center gap-2 text-sm text-gray-600">
                 <input
@@ -219,7 +219,7 @@ export const ServiceModal = ({
                   className="h-4 w-4 text-blue-600 border-gray-200 checked:bg-blue-600 focus:ring-blue-600 focus:ring-2"
                   onChange={() => setIsOffline(true)}
                 />
-                Оффлайн
+                Указать город
               </label>
             </div>
             {errors.location && (
