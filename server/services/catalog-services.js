@@ -10,6 +10,7 @@ class CatalogService {
       ORDER BY created_at DESC`,
       [id]
     );
+
     const resData = [];
     for (const service of services.rows) {
       const user = (
@@ -26,10 +27,22 @@ class CatalogService {
     const totalServices = resData.length;
     const pages = Math.ceil(totalServices / 6);
 
+    let sortedData = [...resData];
+
+    if (params.sort === "newest") {
+      sortedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (params.sort === "oldest") {
+      sortedData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else if (params.sort === "rating") {
+      sortedData.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+    } else if (params.sort === "reviews") {
+      sortedData.sort((a, b) => b.reviews - a.reviews);
+    }
+
     return {
       total: totalServices,
       pages,
-      data: resData.slice((params.page - 1) * 6, params.page * 6),
+      data: sortedData.slice((params.page - 1) * 6, params.page * 6),
     };
   }
 }
