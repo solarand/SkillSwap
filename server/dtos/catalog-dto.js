@@ -9,6 +9,7 @@ module.exports = class CatalogDto {
   category;
   description;
   avatar;
+  createdAt;
 
   constructor(service, user, cntReviews) {
     this.id = service.id;
@@ -21,5 +22,6 @@ module.exports = class CatalogDto {
     this.category = service.category;
     this.description = service.description;
     this.avatar = user.avatar;
+    this.createdAt = service.created_at;
   }
 };

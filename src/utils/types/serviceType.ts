@@ -16,6 +16,7 @@ export interface ICatalogService {
   category: string;
   description: string;
   avatar: string;
+  createdAt: string;
 }
 
 export interface IGetForCatalog {

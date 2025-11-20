@@ -24,3 +24,6 @@ export const pluralize = (
 
 export const getReviewsText = (count: number): string =>
   pluralize(count, "отзыв", "отзыва", "отзывов");
+
+export const getDaysText = (count: number): string =>
+  pluralize(count, "день", "дня", "дней");

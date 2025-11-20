@@ -1,7 +1,8 @@
 import Avatar from "@/components/ui/avatar";
+import { formatDate } from "@/utils/helpers/formatData";
 import { getReviewsText } from "@/utils/helpers/pluralize";
 import type { ICatalogService } from "@/utils/types/serviceType";
-import { Star } from "lucide-react";
+import { Calendar, Star } from "lucide-react";
 
 const ServiceCard = ({
   name,
@@ -12,6 +13,7 @@ const ServiceCard = ({
   title,
   reviews,
   avatar,
+  createdAt,
 }: ICatalogService) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 relative">
@@ -30,6 +32,10 @@ const ServiceCard = ({
             </span>{" "}
           </div>
         </div>
+      </div>
+      <div className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded-full">
+        <Calendar className="w-3 h-3" />
+        <span>Дата публикации: {formatDate(createdAt)}</span>
       </div>
       <span
         className={`text-sm ${location.split(" ")[0] === "Онлайн" ? "text-green-600" : "text-red-600"}`}
