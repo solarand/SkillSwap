@@ -1,16 +1,21 @@
 import Chip from "@/components/ui/span/chip";
+import type { FilterFormValues } from "@/utils/types/serviceType";
 
-const FilterChips = () => {
+const FilterChips = ({ filter }: { filter: FilterFormValues }) => {
+  const activeFilters = [
+    ...(filter.category || []),
+    filter.location === "Онлайн" ? "Онлайн" : filter.city,
+    filter.date,
+    ...(filter.rating || []),
+  ].filter((el) => el !== "");
+
   return (
     <div className="flex flex-wrap gap-2 mb-4 items-center">
-      <Chip name="IT" />
-      <Chip name="Онлайн" />
-      <Chip name="Профессионал" />
-      <button className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-gray-200">
-        Сбросить фильтры
-      </button>
+      {activeFilters.length > 0 &&
+        activeFilters.map((filterName, index) => (
+          <Chip key={`${filterName}-${index}`} name={filterName} />
+        ))}
     </div>
   );
 };
-
 export default FilterChips;

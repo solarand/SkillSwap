@@ -3,6 +3,7 @@ export interface FilterFormValues {
   location: string;
   rating: string[];
   city: string;
+  date: string;
 }
 
 export interface ICatalogService {
@@ -41,6 +42,6 @@ export interface IService {
 
 export interface IGetServices {
   page?: number;
-  filter?: string[];
+  filter?: string;
   sort?: string;
 }
