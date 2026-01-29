@@ -95,6 +95,12 @@ class CatalogService {
       }
     }
 
+    if (params.Search) {
+      filteredData = filteredData.filter((service) =>
+        service.title.toLowerCase().includes(params.Search.toLowerCase())
+      );
+    }
+
     const totalServices = filteredData.length;
     const pages = Math.ceil(totalServices / 6);
 

@@ -44,4 +44,5 @@ export interface IGetServices {
   page?: number;
   filter?: string;
   sort?: string;
+  search?: string;
 }

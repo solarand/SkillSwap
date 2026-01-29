@@ -11,6 +11,7 @@ export const catalogApi = api.injectEndpoints({
           page: params.page,
           filter: params.filter,
           sort: params.sort,
+          Search: params.search,
         },
       }),
     }),

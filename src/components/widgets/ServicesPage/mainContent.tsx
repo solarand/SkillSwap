@@ -10,10 +10,12 @@ import { getVariantsText } from "@/utils/helpers/pluralize";
 const MainContent = ({ filter }: { filter: FilterFormValues }) => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("newest");
+  const [search, setSearch] = useState<string>("");
   const { data, isLoading } = useGetServicesQuery({
     page: page,
     filter: JSON.stringify(filter),
     sort: sort,
+    search: search,
   });
 
   useEffect(() => setPage(1), [data?.pages]);
@@ -32,7 +34,7 @@ const MainContent = ({ filter }: { filter: FilterFormValues }) => {
         Найдено: {getVariantsText(Number(data?.total))}
       </div>
 
-      <SortAndSearch sort={sort} setSort={setSort} />
+      <SortAndSearch sort={sort} setSort={setSort} setSearch={setSearch} />
       {Object.keys(filter).length > 0 && <FilterChips filter={filter} />}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
